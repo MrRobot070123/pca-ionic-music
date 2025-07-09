@@ -1,0 +1,7 @@
+{
+  "name": "pca-ionic-music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
