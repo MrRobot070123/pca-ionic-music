@@ -11,17 +11,14 @@
     pagination = "true" 
     loop="true" 
     slides-per-view="1" 
-    style="width: 100%; height: 100%;"> <!-- Agrega pagina y un bucle para el slider al final -->
-    <swiper-slide> 
+    style="width: 100%; height: 100%;"
+    >
+    <swiper-slide *ngFor="let genre of genres"> 
       <div class="slider-content">
-        <h2>Musica Clásica</h2>
-        <img src="https://venezuelasinfonica.com/wp-content/uploads/2016/01/mclasica.jpg" alt="Musica-Clásica">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? 
-        Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis 
-        placeat exercitationem ipsam, delectus sit accusantium cumque corporis?</p>
+        <h2>{{ genre.title }}</h2>
+        <img [src]="genre.image" [alt]="genre.title">
+        <p>{{genre.description}}</p>
       </div>
     </swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
   </swiper-container>
 </ion-content>
