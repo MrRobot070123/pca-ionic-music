@@ -19,6 +19,14 @@
 
 .slider-content p {
   font-size: 20px;
-  color: #fff; //recuerda que tienes el parrafo en blanco
   text-align: justify;
+}
+
+.card {
+  padding: var(--espaciado-base);
+  background-color: var(--color-claro);
+}
+
+.bg-card-test{
+  background-color: #f44ff4;
 }

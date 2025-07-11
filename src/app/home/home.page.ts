@@ -12,6 +12,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 })
 export class HomePage {
 
+  colorClaro = 'var(--color-claro)';
+  colorOscuro = 'var(--color-oscuro)';
+  colorActual = this.colorOscuro;
+  //Variable para el slider
+  sliderClaro = 'var(--slider-claro)';
+  sliderOscuro = 'var(--slider-oscuro)';
+  sliderColorActual = this.sliderClaro;
+  sliderTexto = 'var(--slider-texto-oscuro)';
+  
+
   genres = [
     {
       title: "Musica Clásica",
@@ -41,4 +51,15 @@ export class HomePage {
   ]
 
   constructor() {}
+
+  cambiarColor(){
+    //If ternario para cambiar el color
+    this.colorActual = this.colorActual === this.colorClaro ? this.colorOscuro : this.colorClaro;
+  }
+
+  cambiarSliderColor() {
+    this.sliderColorActual = this.sliderColorActual === this.sliderClaro ? this.sliderOscuro : this.sliderClaro;
+    this.sliderTexto = this.sliderColorActual === this.sliderClaro ? 'var(--slider-texto-oscuro)' : 'var(--slider-texto-claro)';
+  }
+   
 }
