@@ -35,4 +35,15 @@
       nothing less.
     </ion-card-content>
   </ion-card>
+
+  <!-- Demo de Storage -->
+  <div>
+    <h3>Demo Ionic Storage</h3>
+    <div [style.background-color]="colorActual">
+      <p>Tema Actual: {{colorActual === colorOscuro ? 'Oscuro' : 'Claro'}}</p>
+    </div>
+  </div>
+  <div>
+    <ion-button (click)="cambiarColor()">Cambiar tema y Guardar</ion-button>
+  </div>
 </ion-content>

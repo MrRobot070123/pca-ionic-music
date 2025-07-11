@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
+import { StorageService } from '../services/storage.service';
+import { OnInit } from '@angular/core';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -10,7 +11,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] //Esto es necesario para utilizar swiper en Ionic
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   colorClaro = 'var(--color-claro)';
   colorOscuro = 'var(--color-oscuro)';
@@ -50,16 +51,31 @@ export class HomePage {
     }
   ]
 
-  constructor() {}
+  constructor(private storageService: StorageService) {}
 
-  cambiarColor(){
+  async ngOnInit() {
+    //Cargar el tema desde el storage al iniciar la página
+    await this.loadStoargeData();
+  }
+
+  async cambiarColor(){
     //If ternario para cambiar el color
     this.colorActual = this.colorActual === this.colorClaro ? this.colorOscuro : this.colorClaro;
+    await this.storageService.set('theme', this.colorActual)
+    console.log('Tema camabiado a:', this.colorActual);
   }
 
   cambiarSliderColor() {
     this.sliderColorActual = this.sliderColorActual === this.sliderClaro ? this.sliderOscuro : this.sliderClaro;
     this.sliderTexto = this.sliderColorActual === this.sliderClaro ? 'var(--slider-texto-oscuro)' : 'var(--slider-texto-claro)';
+  }
+
+  async loadStoargeData(){
+    const savedTheme = await this.storageService.get('theme');
+    if (savedTheme) {
+      this.colorActual = savedTheme;
+      console.log('Tema cargado desde el storage:', this.colorActual)
+    }
   }
    
 }
