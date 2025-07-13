@@ -52,7 +52,7 @@ export class StorageService {
   }
 
   // Obtener el tamaño del storage
-  // Nota: El tamaño se refiere al número de elementos almacenados, no al tamaño en bytes.
+  // Nota: El tamaño se refiere al número de elementos almacenados.
   public async length(){
     await this.ready();
     return this._storage?.length();

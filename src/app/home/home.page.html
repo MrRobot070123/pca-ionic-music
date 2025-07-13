@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> Home </ion-title>
+    <ion-button (click)="cambiarSliderColor()"> Slider tema </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -17,12 +18,13 @@
         <img [src]="genre.image" [alt]="genre.title" />
         <p>{{genre.description}}</p>
       </div>
-      <ion-button (click)="cambiarSliderColor()"> Slider tema </ion-button>
     </swiper-slide>
   </swiper-container>
   <div [style.background-color]="colorActual">hola mundo</div>
 
-  <ion-button (click)="cambiarColor()"> Cambiar de tema </ion-button>
+  <div>
+    <ion-button (click)="cambiarColor()">Cambiar tema y Guardar</ion-button>
+  </div>
 
   <ion-card class="bg-card-test">
     <ion-card-header>
@@ -43,7 +45,7 @@
       <p>Tema Actual: {{colorActual === colorOscuro ? 'Oscuro' : 'Claro'}}</p>
     </div>
   </div>
-  <div>
-    <ion-button (click)="cambiarColor()">Cambiar tema y Guardar</ion-button>
-  </div>
+
+  <ion-button (click)="goBack()">Volver al intro</ion-button>
+
 </ion-content>
