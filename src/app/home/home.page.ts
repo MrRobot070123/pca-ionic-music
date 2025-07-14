@@ -31,34 +31,33 @@ export class HomePage implements OnInit {
     {
       title: 'Musica Clásica',
       image:
-        'https://venezuelasinfonica.com/wp-content/uploads/2016/01/mclasica.jpg',
+        'https://cdn.pixabay.com/photo/2014/11/07/20/34/cello-521172_1280.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis placeat exercitationem ipsam, delectus sit accusantium cumque corporis?',
     },
     {
       title: 'Música Popular',
-      image:
-        'https://c923ad959a.clvaw-cdnwnd.com/94a2f702f9ae92bdf199ed2ce3dcf8fa/200000249-40e7640e78/accordion_black_and_white_entertainment_hands_music_musical_instrument_musician_performance-1150838%20%281%29.jpg?ph=c923ad959a',
+      image: 'https://cdn.pixabay.com/photo/2017/11/12/16/41/musician-2943109_1280.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis placeat exercitationem ipsam, delectus sit accusantium cumque corporis?',
     },
     {
       title: 'Música Folclórica',
-      image: 'https://arpeggium.net/media/images/musica-folclorica.jpg',
+      image: 'https://cdn.pixabay.com/photo/2020/03/09/04/34/folklore-4914425_1280.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis placeat exercitationem ipsam, delectus sit accusantium cumque corporis?',
     },
     {
       title: 'Música Instrumental',
       image:
-        'https://cubalite.com/wp-content/uploads/2020/08/Musica-instrumental-Motion-Array.jpg',
+        'https://cdn.pixabay.com/photo/2022/05/24/19/28/cello-7219171_1280.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis placeat exercitationem ipsam, delectus sit accusantium cumque corporis?',
     },
     {
       title: 'Música Eletrónica',
       image:
-        'https://hacercanciones.com/wp-content/uploads/2023/02/canciones-musica-electronica.jpg',
+        'https://cdn.pixabay.com/photo/2022/07/04/04/37/musician-7300353_1280.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis placeat exercitationem ipsam, delectus sit accusantium cumque corporis?',
     },
@@ -68,6 +67,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     await this.loadStoargeData();
+    this.simularCarga();
   }
 
   async ionViewWillEnter() {
@@ -76,7 +76,7 @@ export class HomePage implements OnInit {
 
     if (fromIntro) {
       console.log('Ya vi la pagina de intro');
-      await this.storageService.remove('fromIntro');
+        await this.storageService.remove('fromIntro');
     }
   }
 
@@ -105,6 +105,23 @@ export class HomePage implements OnInit {
       this.colorActual = savedTheme;
       console.log('Tema cargado desde el storage:', this.colorActual);
     }
+  }
+
+  async simularCarga(){
+    const data = await this.obtenerData();
+    console.log('Datos obtenidos:', data);
+  }
+
+  obtenerData(){
+    return new Promise ((resolve, reject) => {
+      try {
+        setTimeout(()=>{
+          resolve(['Pop','Jazz','Rock','Hip-Hop','Reggae']);
+        },3000);
+      } catch (error) {
+        reject('Error al obtener los datos');
+      }
+    })
   }
 
   goBack() {
