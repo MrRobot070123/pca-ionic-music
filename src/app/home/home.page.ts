@@ -60,7 +60,7 @@ export class HomePage implements OnInit {
         'https://cdn.pixabay.com/photo/2022/07/04/04/37/musician-7300353_1280.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, molestiae? Labore earum, repudiandae ex quisquam eius voluptas, nostrum non repellat ea reiciendis placeat exercitationem ipsam, delectus sit accusantium cumque corporis?',
-    },
+    }
   ];
 
   constructor(private storageService: StorageService, private router: Router) {}

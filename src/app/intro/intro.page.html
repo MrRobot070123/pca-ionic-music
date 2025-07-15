@@ -1,10 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>intro</ion-title>
+    <ion-title>Intro</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-title size="large">Soy intro</ion-title>
-  <ion-button (click)="goHome()">Volver al Home</ion-button>
+  <swiper-container
+    pagination="true"
+    slides-per-view="1"
+    style="width: 100%; height: 80%"
+  >
+    <swiper-slide *ngFor="let intro of intros">
+      <div class="slider-content">
+        <h2>{{ intro.title }}</h2>
+        <img [src]="intro.image" [alt]="intro.title" />
+      </div>
+    </swiper-slide>
+  </swiper-container>
+      <div class="slider-content">
+      <ion-button (click)="goHome()">Ir al Home</ion-button>
+    </div>
 </ion-content>
