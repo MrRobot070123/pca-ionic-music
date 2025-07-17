@@ -36,18 +36,22 @@ export class IntroPage {
     {
       title: 'App de Música',
       image: 'assets/img/musica.png',
+      description: '¡Bienvenido a App Musica!'
     },
     {
-      title: 'Disfruta de tus géneros favoritos',
+      title: 'Multiples géneros musicales',
       image: 'assets/img/generos.png',
+      description: 'Disfruta de tus géneros favoritos sin límites.'
     },
     {
-      title: 'Enlista tus canciones preferidas',
+      title: 'Lista de reproducción',
       image: 'assets/img/canciones.png',
+      description: 'Enlista tus canciones preferidas y llévalas contigo donde vayas.'
     },
     {
       title: 'Personaliza tu experiencia',
       image: 'assets/img/personaliza.png',
+      description: 'Lleva a otro nivel tu experiencia musical con tu propio estilo'
     }
   ];
 
