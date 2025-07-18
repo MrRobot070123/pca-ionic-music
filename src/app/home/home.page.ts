@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonThumbnail } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/angular/standalone';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { OnInit } from '@angular/core';
@@ -10,18 +10,21 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonThumbnail, CommonModule],
+  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], //Esto es necesario para utilizar swiper en Ionic
 })
 export class HomePage implements OnInit {
-  colorClaro = 'var(--color-claro)';
-  colorOscuro = 'var(--color-oscuro)';
-  colorActual = this.colorOscuro;
+  temaClaro = 'var(--color-claro)';
+  temaOscuro = 'var(--color-oscuro)';
+  temaActual = this.temaOscuro;
   sliderClaro = 'var(--slider-claro)';
   sliderOscuro = 'var(--slider-oscuro)';
-  sliderColorActual = this.sliderClaro;
-  sliderTexto = 'var(--slider-texto-oscuro)';
+  sliderColorActual = this.sliderOscuro;
+  textoClaro = 'var(--texto-claro)';
+  textoOscuro = 'var(--texto-oscuro)';
+  textoActual= this.textoClaro;
 
+  //Géneros
   genres = [
     {
       title: 'Musica Clásica',
@@ -110,30 +113,41 @@ export class HomePage implements OnInit {
     }
   }
 
-  async cambiarColor() {
-    //If ternario para cambiar el color
-    this.colorActual =
-      this.colorActual === this.colorClaro ? this.colorOscuro : this.colorClaro;
-    await this.storageService.set('theme', this.colorActual);
-    console.log('Tema camabiado a:', this.colorActual);
+  async cambiarTema() {
+
+    if(this.temaActual === this.temaClaro){
+      this.temaActual = this.temaOscuro;
+      this.textoActual = this.textoClaro;
+      
+    } else{
+      this.temaActual = this.temaClaro;
+      this.textoActual = this.textoOscuro;
+    }
+
+    await this.storageService.set('theme', this.temaActual);
+    await this.storageService.set('font', this.textoActual);
+    //this.cambiarSliderColor();
+    console.log('Tema camabiado a:', this.temaActual);
   }
 
-  /*cambiarSliderColor() {
+  cambiarSliderColor() {
     this.sliderColorActual =
       this.sliderColorActual === this.sliderClaro
         ? this.sliderOscuro
         : this.sliderClaro;
-    this.sliderTexto =
+    this.textoActual = 'var(--slider-texto-claro)';
       this.sliderColorActual === this.sliderClaro
         ? 'var(--slider-texto-oscuro)'
         : 'var(--slider-texto-claro)';
-  }*/
+  }
 
   async loadStoargeData() {
     const savedTheme = await this.storageService.get('theme');
+    const savedFont = await this.storageService.get('font');
     if (savedTheme) {
-      this.colorActual = savedTheme;
-      console.log('Tema cargado desde el storage:', this.colorActual);
+      this.temaActual = savedTheme;
+      this.textoActual= savedFont;
+      console.log('Tema cargado desde el storage:', this.temaActual);
     }
   }
 

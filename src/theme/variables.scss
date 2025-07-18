@@ -1,15 +1,14 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
 :root {
-    --color-claro: #f4cb89;
-    --color-oscuro: #fc7e00;
+    --color-claro: #ffffff;
+    --color-oscuro: #000000;
     --espaciado-base: 1rem;
     --espaciado-grande: 2rem;
     --slider-oscuro: #000000;
-    --slider-texto-claro: #ffffff;
+    --texto-claro: #ffffff;
     --slider-claro: #ffffff;
-    --slider-texto-oscuro: #000000;
-    color-scheme: light dark;
+    --texto-oscuro: #000000;
 }
 
 h1, h2, h3, h4, h5, h6 {

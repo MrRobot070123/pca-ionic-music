@@ -1,76 +1,50 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Inicio </ion-title>
-    <!--<ion-button (click)="cambiarSliderColor()"> Slider tema </ion-button>-->
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <h2>Géneros Músicales:</h2>
-  <swiper-container
-    pagination="true"
-    loop="true"
-    slides-per-view="1"
-    style="width: 100%; height: 90%"
-  >
-    <swiper-slide *ngFor="let genre of genres">
-      <!--Modificacion-->
-      <ion-card>
-        <img [src]="genre.image" [alt]="genre.title" />
-        <ion-card-header
-          class="slider-content"
-          [style.background-color]="sliderColorActual"
-          [style.color]="sliderTexto"
-        >
-          <ion-card-subtitle class="capitalize"
-            >{{ genre.subtitle }}</ion-card-subtitle
-          >
-          <ion-card-title>{{ genre.title }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content class="slider-content p">
-          <p class="reducir">{{genre.description}}</p>
-        </ion-card-content>
-      </ion-card>
-    </swiper-slide>
-  </swiper-container>
+  <div [style.background-color]="temaActual" [style.color]="textoActual">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title> Inicio </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <p>Tema Actual: {{temaActual === temaOscuro ? 'Oscuro' : 'Claro'}}</p>
+    <h2>Géneros Músicales:</h2>
+    <swiper-container pagination="true" loop="true" slides-per-view="1" style="width: 100%; height: 100%;">
+      <swiper-slide *ngFor="let genre of genres">
+        <!--Modificacion-->
+        <ion-card [style.background-color]="temaActual" [style.color]="textoActual">
+          <img [src]="genre.image" [alt]="genre.title" />
+          <ion-card-header class="slider-content">
+            <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
+            <ion-card-title [style.color]="textoActual">{{ genre.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="slider-content p">
+            <p class="reducir">{{genre.description}}</p>
+          </ion-card-content>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
 
-  <h2>Destacados:</h2>
-  <swiper-container
-    slides-per-view="1.5"
-    style="width: 100%; height: 30%"
-  >
-    <swiper-slide *ngFor="let destacado of destacados">
-      <ion-card>
-        <ion-card-content class="slider-content p">
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img [src]="destacado.image" [alt]="destacado.title" />
-            </ion-thumbnail>
-            <div>
-              <ion-card-title>{{ destacado.title }}</ion-card-title>
-              <ion-card-subtitle class="capitalize"
-                >{{ destacado.subtitle }}</ion-card-subtitle
-              >
+    <h2>Destacados:</h2>
+    <swiper-container pagination="true" slides-per-view="2" style="width: 100%; height: 100%; margin-top: 10px; margin-bottom: 10px;">
+      <swiper-slide *ngFor="let destacado of destacados">
+        <ion-card [style.background-color]="temaActual" class="horizontal-card">
+          <div class="horizontal-content">
+            <img [src]="destacado.image" [alt]="destacado.title" />
+            <div class="text-content">
+              <ion-card-title class="capitalize" [style.color]="textoActual">{{ destacado.title
+                }}</ion-card-title>
+              <ion-card-subtitle style="margin: 0; font-size: 10px; text-transform: capitalize;" [style.color]="textoActual">
+                {{ destacado.subtitle }}
+              </ion-card-subtitle>
             </div>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-    </swiper-slide>
-  </swiper-container>
+          </div>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
 
-  <div [style.background-color]="colorActual">hola mundo</div>
-
-  <div>
-    <ion-button (click)="cambiarColor()">Cambiar tema y Guardar</ion-button>
-  </div>
-
-  <!-- Demo de Storage -->
-  <div>
-    <h3>Demo Ionic Storage</h3>
-    <div [style.background-color]="colorActual">
-      <p>Tema Actual: {{colorActual === colorOscuro ? 'Oscuro' : 'Claro'}}</p>
+    <div>
+      <ion-button (click)="cambiarTema()">Cambiar tema y Guardar</ion-button>
     </div>
-  </div>
 
-  <ion-button (click)="goBack()">Volver al intro</ion-button>
+    <ion-button (click)="goBack()">Volver al intro</ion-button>
+  </div>
 </ion-content>
