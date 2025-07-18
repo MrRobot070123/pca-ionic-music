@@ -10,7 +10,7 @@
     <swiper-container pagination="true" loop="true" slides-per-view="1" style="width: 100%; height: 100%;">
       <swiper-slide *ngFor="let genre of genres">
         <!--Modificacion-->
-        <ion-card [style.background-color]="temaActual" [style.color]="textoActual">
+        <ion-card [style.background-color]="sliderColorActual" [style.color]="textoActual">
           <img [src]="genre.image" [alt]="genre.title" />
           <ion-card-header class="slider-content">
             <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
@@ -24,9 +24,9 @@
     </swiper-container>
 
     <h2>Destacados:</h2>
-    <swiper-container pagination="true" slides-per-view="2" style="width: 100%; height: 100%; margin-top: 10px; margin-bottom: 10px;">
+    <swiper-container pagination="true" slides-per-view="1.5" style="width: 90%; height: 100%; margin-top: 10px; margin-bottom: 10px; border: solid; border-radius: 10px;">
       <swiper-slide *ngFor="let destacado of destacados">
-        <ion-card [style.background-color]="temaActual" class="horizontal-card">
+        <ion-card [style.background-color]="sliderColorActual" class="horizontal-card">
           <div class="horizontal-content">
             <img [src]="destacado.image" [alt]="destacado.title" />
             <div class="text-content">
@@ -36,6 +36,7 @@
                 {{ destacado.subtitle }}
               </ion-card-subtitle>
             </div>
+            <ion-icon name="play-circle"></ion-icon>
           </div>
         </ion-card>
       </swiper-slide>

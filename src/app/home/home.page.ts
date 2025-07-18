@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { OnInit } from '@angular/core';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, CommonModule],
+  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], //Esto es necesario para utilizar swiper en Ionic
 })
 export class HomePage implements OnInit {
@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
       title: 'Musica Clásica',
       subtitle: '(Sonidos Eternos)',
       image:
-        'https://cdn.pixabay.com/photo/2014/11/07/20/34/cello-521172_1280.jpg',
+        'https://cdn.pixabay.com/photo/2018/03/21/13/16/saxophone-3246650_1280.jpg',
       description:
         'Suena a orquestas, pianos y violines. Aunque parezca antigua, sigue emocionando y llenando teatros después de cientos de años.',
     },
@@ -117,35 +117,29 @@ export class HomePage implements OnInit {
 
     if(this.temaActual === this.temaClaro){
       this.temaActual = this.temaOscuro;
+      this.sliderColorActual = this.sliderOscuro;
       this.textoActual = this.textoClaro;
       
     } else{
       this.temaActual = this.temaClaro;
+      this.sliderColorActual = this.sliderClaro;
       this.textoActual = this.textoOscuro;
     }
 
     await this.storageService.set('theme', this.temaActual);
+    await this.storageService.set('slider', this.sliderColorActual);
     await this.storageService.set('font', this.textoActual);
     //this.cambiarSliderColor();
     console.log('Tema camabiado a:', this.temaActual);
   }
 
-  cambiarSliderColor() {
-    this.sliderColorActual =
-      this.sliderColorActual === this.sliderClaro
-        ? this.sliderOscuro
-        : this.sliderClaro;
-    this.textoActual = 'var(--slider-texto-claro)';
-      this.sliderColorActual === this.sliderClaro
-        ? 'var(--slider-texto-oscuro)'
-        : 'var(--slider-texto-claro)';
-  }
-
   async loadStoargeData() {
     const savedTheme = await this.storageService.get('theme');
+    const savedSlider = await this.storageService.get('slider');
     const savedFont = await this.storageService.get('font');
     if (savedTheme) {
       this.temaActual = savedTheme;
+      this.sliderColorActual = savedSlider;
       this.textoActual= savedFont;
       console.log('Tema cargado desde el storage:', this.temaActual);
     }

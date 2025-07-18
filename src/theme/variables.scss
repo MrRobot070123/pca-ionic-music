@@ -1,13 +1,13 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
 :root {
-    --color-claro: #ffffff;
-    --color-oscuro: #000000;
+    --color-claro: #dbdbdb;
+    --color-oscuro: #00000057;
     --espaciado-base: 1rem;
     --espaciado-grande: 2rem;
-    --slider-oscuro: #000000;
-    --texto-claro: #ffffff;
-    --slider-claro: #ffffff;
+    --slider-oscuro: #68dabc22;
+    --texto-claro: #52ffe4;
+    --slider-claro: #e6e6fa;
     --texto-oscuro: #000000;
 }
 
@@ -17,4 +17,8 @@ h1, h2, h3, h4, h5, h6 {
 
 ion-title {
     font-size: 4.5vh;
+}
+
+swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal{
+    color: white;
 }
