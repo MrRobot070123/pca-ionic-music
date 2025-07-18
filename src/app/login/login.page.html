@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <figure class="profile-default-image ion-text-center">
+    <p>Ingresa tus datos</p>
+    <img src="assets/img/user.png" alt="">
+  </figure>
+
+  <form [formGroup]="loginForm">
+    <ion-item>
+      <ion-input label="Email" labelPlacement="stacked" placeholder="Escribe tu email"
+        formControlName="email"></ion-input>
+    </ion-item>
+     <div>
+       <ng-container *ngFor="let validation of validation_messages.email">
+        {{validation_messages}}
+       </ng-container>
+     </div>
+    <ion-item>
+      <ion-input label="Contreseña" labelPlacement="stacked" placeholder="Tu contreseña" type="password" formControlName="password"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>
