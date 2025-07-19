@@ -1,13 +1,11 @@
 h2{
   font-size: 20px;
+  margin: 0;
   margin-left: 15px;
-  margin-top: 30px;
-  margin-bottom: 0px;
 }
 
 .slider-content {
   text-align: center;
-  padding: 10px;
 }
 
 .slider-content img{
@@ -21,11 +19,6 @@ h2{
   font-size: 17px;
   text-align: center;
 }
-
-/*.card {
-  padding: var(--espaciado-base);
-  background-color: var(--color-claro);
-}*/
 
 .capitalize {
   text-transform: capitalize;
@@ -63,4 +56,14 @@ h2{
   width: 300px;
   height: 300px;
   margin-left: auto; /* Alinea a la derecha */
+}
+
+ion-menu::part(backdrop) {
+  background-color: #972399;
+}
+
+ion-menu::part(container) {
+  border-radius: 0 20px 20px 0;
+
+  box-shadow: 4px 0px 16px #972399
 }

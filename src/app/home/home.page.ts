@@ -1,7 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
+import { 
+  IonCard, 
+  IonCardContent, 
+  IonCardHeader, 
+  IonCardSubtitle, 
+  IonCardTitle, 
+  IonButton, 
+  IonApp, 
+  IonButtons, 
+  IonContent,
+  IonHeader,
+  IonMenu,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { OnInit } from '@angular/core';
@@ -11,7 +25,7 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, CommonModule],
+  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, CommonModule,IonApp, IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonTitle, IonToolbar],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], //Esto es necesario para utilizar swiper en Ionic
 })
 export class HomePage implements OnInit {
@@ -28,7 +42,7 @@ export class HomePage implements OnInit {
   //Géneros
   genres = [
     {
-      title: 'Musica Clásica',
+      title: 'Clásico',
       subtitle: '(Sonidos Eternos)',
       image:
         'https://cdn.pixabay.com/photo/2018/03/21/13/16/saxophone-3246650_1280.jpg',
@@ -36,21 +50,21 @@ export class HomePage implements OnInit {
         'Suena a orquestas, pianos y violines. Aunque parezca antigua, sigue emocionando y llenando teatros después de cientos de años.',
     },
     {
-      title: 'Música Popular',
+      title: 'Popular',
       subtitle: '(para todos)',
       image: 'https://cdn.pixabay.com/photo/2017/11/12/16/41/musician-2943109_1280.jpg',
       description:
         'Es la música que canta todo el mundo. Suena en la radio, en las fiestas y hasta en la calle. Es pegajosa, simple y fácil de recordar',
     },
     {
-      title: 'Música Folclórica',
+      title: 'Folclórico',
       subtitle: '(tus raíces)',
       image: 'https://cdn.pixabay.com/photo/2020/03/09/04/34/folklore-4914425_1280.jpg',
       description:
         'Es música que te conecta con las raíces. Es como un abrazo sonoro de tu tierra. Cada ritmo, cada instrumento y cada letra tiene algo de historia adentro.',
     },
     {
-      title: 'Música Instrumental',
+      title: 'Instrumental',
       subtitle: '(sonidos que hablan)',
       image:
         'https://cdn.pixabay.com/photo/2022/05/24/19/28/cello-7219171_1280.jpg',
@@ -58,7 +72,7 @@ export class HomePage implements OnInit {
         'Donde los instrumentos cuentan la historia. Ideal para relajar, concentrarse o viajar con la mente mientras suenan guitarras, pianos o violines.',
     },
     {
-      title: 'Música Eletrónica',
+      title: 'Eletrónico',
       subtitle: '(Vibraciones modernas)',
       image:
         'https://cdn.pixabay.com/photo/2022/07/04/04/37/musician-7300353_1280.jpg',
