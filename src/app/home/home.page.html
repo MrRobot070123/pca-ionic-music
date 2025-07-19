@@ -1,5 +1,5 @@
 <ion-content>
-  <div [style.background-color]="temaActual" [style.color]="textoActual">
+  <div [style.background-color]="temaActual" [style.color]="textoActual" style="width: 100%; height: 100%;">
     <ion-header>
       <ion-toolbar>
         <ion-title> Inicio </ion-title>
@@ -7,7 +7,7 @@
     </ion-header>
     <p>Tema Actual: {{temaActual === temaOscuro ? 'Oscuro' : 'Claro'}}</p>
     <h2>Géneros Músicales:</h2>
-    <swiper-container pagination="true" loop="true" slides-per-view="1" style="width: 100%; height: 100%;">
+    <swiper-container pagination="true" slides-per-view="1" style="width: 100%; height: 100%;">
       <swiper-slide *ngFor="let genre of genres">
         <!--Modificacion-->
         <ion-card [style.background-color]="sliderColorActual" [style.color]="textoActual">
@@ -22,9 +22,12 @@
         </ion-card>
       </swiper-slide>
     </swiper-container>
-
-    <h2>Destacados:</h2>
-    <swiper-container pagination="true" slides-per-view="1.5" style="width: 90%; height: 100%; margin-top: 10px; margin-bottom: 10px; border: solid; border-radius: 10px;">
+ 
+  </div>
+  
+<div [style.background-color]="temaActual" [style.color]="textoActual">
+  <h2>Destacados:</h2>
+    <swiper-container pagination="true" slides-per-view="1" style="width: 90%; height: 100%; margin-top: 10px; margin-bottom: 10px; border: solid; border-radius: 10px;">
       <swiper-slide *ngFor="let destacado of destacados">
         <ion-card [style.background-color]="sliderColorActual" class="horizontal-card">
           <div class="horizontal-content">
@@ -36,7 +39,7 @@
                 {{ destacado.subtitle }}
               </ion-card-subtitle>
             </div>
-            <ion-icon name="play-circle"></ion-icon>
+            <img class="icono" src="assets\img\caret-forward-outline.svg" alt="logo-play">
           </div>
         </ion-card>
       </swiper-slide>

@@ -2,7 +2,7 @@
 // http://ionicframework.com/docs/theming/
 :root {
     --color-claro: #dbdbdb;
-    --color-oscuro: #00000057;
+    --color-oscuro: #000000;
     --espaciado-base: 1rem;
     --espaciado-grande: 2rem;
     --slider-oscuro: #68dabc22;
@@ -17,8 +17,4 @@ h1, h2, h3, h4, h5, h6 {
 
 ion-title {
     font-size: 4.5vh;
-}
-
-swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal{
-    color: white;
 }

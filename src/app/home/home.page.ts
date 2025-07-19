@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { OnInit } from '@angular/core';
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon, CommonModule],
+  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], //Esto es necesario para utilizar swiper en Ionic
 })
 export class HomePage implements OnInit {
@@ -96,7 +97,8 @@ export class HomePage implements OnInit {
   ]
 
 
-  constructor(private storageService: StorageService, private router: Router) {}
+  constructor(private storageService: StorageService, private router: Router) {
+  }
 
   async ngOnInit() {
     await this.loadStoargeData();
