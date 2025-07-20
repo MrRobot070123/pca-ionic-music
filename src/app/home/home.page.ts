@@ -38,6 +38,13 @@ export class HomePage implements OnInit {
   textoClaro = 'var(--texto-claro)';
   textoOscuro = 'var(--texto-oscuro)';
   textoActual= this.textoClaro;
+  isToggled = false; //variable que controla el toggle
+
+  onToggleChange(event: any) { //Escucha el cambio del toggle
+    this.isToggled = event.detail.checked; //actualiza el valor de isToggled
+    console.log('Toggle:', this.isToggled);
+    this.cambiarTema(); //llama a la funcion para cambiar el tema
+  }
 
   //Géneros
   genres = [
@@ -134,17 +141,19 @@ export class HomePage implements OnInit {
       this.temaActual = this.temaOscuro;
       this.sliderColorActual = this.sliderOscuro;
       this.textoActual = this.textoClaro;
+      this.isToggled = true;
       
     } else{
       this.temaActual = this.temaClaro;
       this.sliderColorActual = this.sliderClaro;
       this.textoActual = this.textoOscuro;
+      this.isToggled = false;
     }
 
     await this.storageService.set('theme', this.temaActual);
     await this.storageService.set('slider', this.sliderColorActual);
     await this.storageService.set('font', this.textoActual);
-    //this.cambiarSliderColor();
+    await this.storageService.set('toggle', this.isToggled);
     console.log('Tema camabiado a:', this.temaActual);
   }
 
@@ -152,10 +161,12 @@ export class HomePage implements OnInit {
     const savedTheme = await this.storageService.get('theme');
     const savedSlider = await this.storageService.get('slider');
     const savedFont = await this.storageService.get('font');
+    const savedToggle = await this.storageService.get('toggle');
     if (savedTheme) {
       this.temaActual = savedTheme;
       this.sliderColorActual = savedSlider;
       this.textoActual= savedFont;
+      this.isToggled= savedToggle;
       console.log('Tema cargado desde el storage:', this.temaActual);
     }
   }
