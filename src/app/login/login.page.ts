@@ -22,6 +22,14 @@ export class LoginPage implements OnInit {
       {
         type: "email", message: "Email invalido"
       }
+    ],
+    password: [
+      {
+        type: "required", message: "Digita tu contraseña"
+      },
+      {
+        type: "minlength", message: "La contraseña debe tener por lo menos 6 caractéres"
+      }
     ]
   }
 
@@ -45,6 +53,10 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  loginUser(credentials: any){
+    console.log(credentials);
   }
 
 }
