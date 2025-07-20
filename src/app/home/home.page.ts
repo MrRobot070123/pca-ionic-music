@@ -72,7 +72,7 @@ export class HomePage implements OnInit {
         'Donde los instrumentos cuentan la historia. Ideal para relajar, concentrarse o viajar con la mente mientras suenan guitarras, pianos o violines.',
     },
     {
-      title: 'Eletrónico',
+      title: 'Electrónica',
       subtitle: '(Vibraciones modernas)',
       image:
         'https://cdn.pixabay.com/photo/2022/07/04/04/37/musician-7300353_1280.jpg',

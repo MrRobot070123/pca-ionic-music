@@ -2,19 +2,21 @@
   text-align: center;
 }
 
+ion-content{
+  --background: var(--color-oscuro);
+}
+
+p {
+  color: white;
+}
+
 img{
-  width: 45%;
+  width: 100%;
   max-width: 300px;
   height: auto;
   border-radius: 15px;
-  margin: 20px 0;
-}
-
-.slider-content h2 {
-  font-size: 1.5em;
-  margin: 10px 0;
-  color:#3433ff;
-  padding-top: 30%;
+  margin-top: 100px;
+  position: relative;
 }
 
 .slider-content p {
@@ -29,7 +31,7 @@ img{
 }
 
 ion-button{
-  --background: #972399;
+  --background: #0098da;
   --background-activated: #0a0a0a83;
 }
 

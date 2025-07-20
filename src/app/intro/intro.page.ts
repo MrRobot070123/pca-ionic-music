@@ -11,7 +11,6 @@ import {
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-intro',
@@ -34,23 +33,19 @@ export class IntroPage {
 
   intros = [
     {
-      title: 'Oly Music',
-      image: 'assets/img/musica.png',
+      image: 'assets/img/musica.gif',
       description: '¡Bienvenido a tu app favorita!'
     },
     {
-      title: 'Multiples géneros musicales',
-      image: 'assets/img/generos.png',
+      image: 'assets/img/generos.gif',
       description: 'Disfruta de tus géneros favoritos sin límites.'
     },
     {
-      title: 'Lista de reproducción',
-      image: 'assets/img/canciones.png',
+      image: 'assets/img/canciones.gif',
       description: 'Enlista tus canciones preferidas y llévalas contigo donde vayas.'
     },
     {
-      title: 'Personaliza tu experiencia',
-      image: 'assets/img/personaliza.png',
+      image: 'assets/img/personaliza.gif',
       description: 'Lleva a otro nivel tu experiencia musical con tu propio estilo'
     }
   ];
