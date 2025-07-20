@@ -34,9 +34,9 @@ export class IntroPage {
 
   intros = [
     {
-      title: 'App de Música',
+      title: 'Oly Music',
       image: 'assets/img/musica.png',
-      description: '¡Bienvenido a App Musica!'
+      description: '¡Bienvenido a tu app favorita!'
     },
     {
       title: 'Multiples géneros musicales',

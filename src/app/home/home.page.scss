@@ -1,7 +1,9 @@
 h2{
   font-size: 20px;
   margin: 0;
-  margin-left: 15px;
+  margin-left: 32px;
+  padding-top: 20px;
+  font: bold 23px 'Arial Narrow', Arial, sans-serif;
 }
 
 .slider-content {
@@ -17,13 +19,13 @@ h2{
 
 .slider-content p {
   font-size: 17px;
-  text-align: center;
+  text-align: justify;
 }
 
 .capitalize {
   text-transform: capitalize;
   padding: 5px 0px;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .reducir {
@@ -52,12 +54,6 @@ h2{
   justify-content: center;
 }
 
-.icono {
-  width: 300px;
-  height: 300px;
-  margin-left: auto; /* Alinea a la derecha */
-}
-
 ion-menu::part(backdrop) {
   background-color: #972399;
 }
@@ -66,4 +62,8 @@ ion-menu::part(container) {
   border-radius: 0 20px 20px 0;
 
   box-shadow: 4px 0px 16px #972399
+}
+
+ion-col{
+  margin: auto;
 }

@@ -110,13 +110,12 @@ export class HomePage implements OnInit {
     }
   ]
 
-
   constructor(private storageService: StorageService, private router: Router) {
   }
 
   async ngOnInit() {
     await this.loadStoargeData();
-    this.simularCarga();
+    //this.simularCarga();
   }
 
   async ionViewWillEnter() {
@@ -161,7 +160,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  async simularCarga(){
+  /*async simularCarga(){
     const data = await this.obtenerData();
     console.log('Datos obtenidos:', data);
   }
@@ -176,7 +175,7 @@ export class HomePage implements OnInit {
         reject('Error al obtener los datos');
       }
     })
-  }
+  }*/
 
   goBack() {
     console.log('Volver a la página anterior');

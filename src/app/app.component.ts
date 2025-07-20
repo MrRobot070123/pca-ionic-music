@@ -9,6 +9,7 @@ register();
   templateUrl: 'app.component.html',
   imports: [IonApp, IonRouterOutlet],
 })
+
 export class AppComponent {
   constructor() {}
 }

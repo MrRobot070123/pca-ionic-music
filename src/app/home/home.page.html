@@ -14,7 +14,10 @@
           <ion-button (click)="cambiarTema()">Cambiar tema</ion-button>
         </ion-item>
         <ion-item>
-          <ion-label style="margin: 0;">Tema Actual: {{temaActual === temaOscuro ? 'Oscuro' : 'Claro'}}</ion-label>
+          <ion-label style="margin: 0"
+            >Tema Actual: {{temaActual === temaOscuro ? 'Oscuro' :
+            'Claro'}}</ion-label
+          >
         </ion-item>
         <ion-item>
           <ion-button (click)="goBack()">Volver al intro</ion-button>
@@ -28,19 +31,30 @@
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Menu</ion-title>
+        <ion-title>Inicio</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <div [style.background-color]="temaActual" [style.color]="textoActual">
-        <h2>Géneros Músicales:</h2>
-        <swiper-container pagination="true" slides-per-view="1" style="width: 90%; height: 80%;">
+        <h2>Géneros Músicales</h2>
+        <swiper-container
+          pagination="true"
+          slides-per-view="1"
+          style="width: 90%; height: 80%"
+        >
           <swiper-slide *ngFor="let genre of genres">
-            <ion-card [style.background-color]="sliderColorActual" [style.color]="textoActual">
+            <ion-card
+              [style.background-color]="sliderColorActual"
+              [style.color]="textoActual"
+            >
               <img [src]="genre.image" [alt]="genre.title" />
               <ion-card-header class="slider-content">
-                <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
-                <ion-card-title [style.color]="textoActual">{{ genre.title }}</ion-card-title>
+                <ion-card-subtitle class="capitalize"
+                  >{{ genre.subtitle }}</ion-card-subtitle
+                >
+                <ion-card-title [style.color]="textoActual"
+                  >{{ genre.title }}</ion-card-title
+                >
               </ion-card-header>
               <ion-card-content class="slider-content p">
                 <p class="reducir">{{genre.description}}</p>
@@ -49,23 +63,49 @@
           </swiper-slide>
         </swiper-container>
         <div>
-          <h2>Destacados:</h2>
+          <h2>Destacados</h2>
         </div>
-        <swiper-container pagination="true" slides-per-view="1" style="width: 90%; height: 30%">
+        <swiper-container
+          pagination="true"
+          slides-per-view="1.1"
+          style="width: 90%; height: 30%"
+        >
           <swiper-slide *ngFor="let destacado of destacados">
-            <ion-card [style.background-color]="sliderColorActual" class="horizontal-card">
-              <div class="horizontal-content">
-                <img [src]="destacado.image" [alt]="destacado.title" />
-                <div class="text-content">
-                  <ion-card-title class="capitalize" [style.color]="textoActual">{{ destacado.title
-                    }}</ion-card-title>
-                  <ion-card-subtitle style="margin: 0; font-size: 10px; text-transform: capitalize;"
-                    [style.color]="textoActual">
-                    {{ destacado.subtitle }}
-                  </ion-card-subtitle>
-                </div>
-                <img class="icono" src="assets\img\caret-forward-outline.svg" alt="logo-play">
-              </div>
+            <ion-card
+              [style.background-color]="sliderColorActual"
+              class="horizontal-card"
+            >
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="auto"
+                    ><img [src]="destacado.image" [alt]="destacado.title" style="width: 80px; height: auto;"
+                  /></ion-col>
+                  <ion-col size="6"
+                    ><div class="text-content">
+                      <ion-card-title
+                        class="capitalize"
+                        [style.color]="textoActual"
+                        >{{ destacado.title }}</ion-card-title
+                      >
+                      <ion-card-subtitle
+                        style="
+                          margin: 0;
+                          font-size: 15px;
+                          text-transform: capitalize;
+                        "
+                        [style.color]="textoActual"
+                      >
+                        {{ destacado.subtitle }}
+                      </ion-card-subtitle>
+                    </div></ion-col
+                  >
+                  <ion-col
+                    ><img style="width: 60px;"
+                      src="assets\img\caret-forward-outline.svg"
+                      alt="logo-play"
+                  /></ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-card>
           </swiper-slide>
         </swiper-container>
