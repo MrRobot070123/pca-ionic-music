@@ -20,6 +20,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -117,7 +118,7 @@ export class HomePage implements OnInit {
     }
   ]
 
-  constructor(private storageService: StorageService, private router: Router) {
+  constructor(private storageService: StorageService, private router: Router, private navCtl: NavController) {
   }
 
   async ngOnInit() {
@@ -191,5 +192,11 @@ export class HomePage implements OnInit {
   goBack() {
     console.log('Volver a la página anterior');
     this.router.navigateByUrl('/intro');
+  }
+
+  exit(){ // Cerrar sesion corregir la salida
+    this.storageService.set('login',false);
+    console.log('Cerrando sesion');
+    this.navCtl.navigateBack('/login');
   }
 }

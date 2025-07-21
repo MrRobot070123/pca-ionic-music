@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,9 @@ import { IonicModule } from '@ionic/angular';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule]
 })
 export class LoginPage implements OnInit {
-
+  
   loginForm: FormGroup;
+  errorMessage: String = "";
 
   validation_messages = {
     email: [
@@ -33,7 +35,7 @@ export class LoginPage implements OnInit {
     ]
   }
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private navCtrl: NavController) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
         '',
@@ -57,6 +59,13 @@ export class LoginPage implements OnInit {
 
   loginUser(credentials: any){
     console.log(credentials);
-  }
+    this.authService.loginUser(credentials).then(respuesta => {
+      console.log(respuesta);
+      this.errorMessage ="";
+      this.navCtrl.navigateForward("/home");
 
+    }).catch(error => {
+      this.errorMessage = error;
+    })
+  }
 }
