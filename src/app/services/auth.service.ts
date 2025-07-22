@@ -8,11 +8,14 @@ export class AuthService {
 
   constructor(private storageService : StorageService) { }
 
-  loginUser(credentials: any){
+  async loginUserAuth(credentials: any){
+    const usuarioForm = credentials;
+    let usuariosBD = await this.storageService.getUsers();
     return new Promise ((accept, reject) =>{
-      if(
-        credentials.email == 'correoprueba@gmail.com' &&
-        credentials.password == '12345678'
+      //Valida si el cuenta (email) ya exite y compara con la contraseña de la base datos vs la contraseña del formulario
+      const cuenta = usuariosBD.some(user => user.email === usuarioForm.email);
+      const password = usuariosBD.some(user => user.password === usuarioForm.password);
+      if(cuenta && password
       ){
         accept('¡Login Correcto!');
         this.goHome();

@@ -55,11 +55,12 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loginForm.setValue
   }
 
   loginUser(credentials: any){
     console.log(credentials);
-    this.authService.loginUser(credentials).then(respuesta => {
+    this.authService.loginUserAuth(credentials).then(respuesta => {
       console.log(respuesta);
       this.errorMessage ="";
       this.navCtrl.navigateForward("/home");
@@ -67,5 +68,8 @@ export class LoginPage implements OnInit {
     }).catch(error => {
       this.errorMessage = error;
     })
+  }
+  redirigirRegister(){
+    this.navCtrl.navigateForward('/register');
   }
 }

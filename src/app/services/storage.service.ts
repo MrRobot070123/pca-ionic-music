@@ -6,6 +6,7 @@ import { Storage} from '@ionic/storage-angular';
 })
 export class StorageService {
   private _storage: Storage | null = null;
+
   constructor( private storage: Storage) { 
     this.init();
   }
@@ -13,6 +14,16 @@ export class StorageService {
   async init () {
     const storage = await this.storage.create();
     this._storage = storage;
+  }
+
+  // Guarda los usuarios
+  async setUsers(users: any[]){
+    await this._storage?.set('usuarios', users);
+  }
+
+  // Obtiene los usuarios
+  async getUsers(): Promise<any[]> {
+    return (await this._storage?.get('usuarios')) || [];
   }
 
   private async ready (){

@@ -7,12 +7,13 @@
   <figure class="profile-default-image ion-text-center">
     <img src="/assets/img/Logo_register.png" alt="Logo_Ape7ron" />
   </figure>
-  <form [formGroup]="registerForm">
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
     <ion-item>
       <ion-input
+        class="TransformarTexto"
         label="Nombre"
         labelPlacement="stacked"
-        placeholder="Nombre y Apellido"
+        placeholder="Nombre | Apellido"
         formControlName="name"
       >
       </ion-input>
@@ -54,7 +55,7 @@
     </div>
     <ion-item>
       <ion-input
-        label="Contreseña"
+        label="Contraseña"
         labelPlacement="stacked"
         placeholder="Tu contraseña"
         type="password"
@@ -82,5 +83,5 @@
       Registrar
     </ion-button>
   </form>
-  <ion-button expand="block" fill="clear" shape="round"> Login </ion-button>
+  <ion-button expand="block" fill="clear" shape="round" (click)="redirigirLogin()"> Login </ion-button>
 </ion-content>
