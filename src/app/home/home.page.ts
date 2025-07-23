@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   isToggled = false; //variable que controla el toggle
   tracks: any;
   albums: any;
+  artists: any;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -79,6 +80,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     this.loadAlbums();
+    this.loadArtists();
     this.loadTracks();
     await this.loadStoargeData();
   }
@@ -94,6 +96,13 @@ export class HomePage implements OnInit {
     this.musicService.getAlbums().then(albums => {
       this.albums = albums;
       console.log(this.tracks, "los albums");
+    })
+  }
+
+  loadArtists() {
+    this.musicService.getArtists().then(artists => {
+      this.artists = artists;
+      console.log(this.tracks, "los artistas");
     })
   }
 
@@ -165,4 +174,19 @@ export class HomePage implements OnInit {
     });
     modal.present();
   }
+
+  async showSongsByArtists(artistId: string) {
+    console.log("artista id: ", artistId)
+    const songs = await this.musicService.getSongsByArtists(artistId);
+    console.log("songs: ", songs)
+    const modal = await this.modalCtrl.create({
+      component: SongsModalPage,
+      componentProps: {
+        songs: songs
+      }
+    });
+    modal.present();
+  }
+
+  //crear funcion showSongsByArtists que abrirá el modal ya creado y enviara en los promps las canciones del artistas
 }

@@ -8,13 +8,8 @@
     <ion-content>
       <ion-list>
         <ion-item>
-          <ion-toggle
-            aria-label="Tertiary toggle"
-            color="tertiary"
-            (ionChange)="onToggleChange($event)"
-            [checked]="isToggled"
-            >Tema Oscuro</ion-toggle
-          >
+          <ion-toggle aria-label="Tertiary toggle" color="tertiary" (ionChange)="onToggleChange($event)"
+            [checked]="isToggled">Tema Oscuro</ion-toggle>
         </ion-item>
         <ion-item>
           <ion-button (click)="goBack()">Volver al intro</ion-button>
@@ -31,60 +26,57 @@
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title
-          ><img
-            src="/assets/img/Logo_500x250.png"
-            alt="Logo_Ape7ron"
-            style="width: 80%; margin-top: 10px"
-        /></ion-title>
+        <ion-title><img src="/assets/img/Logo_500x250.png" alt="Logo_Ape7ron"
+            style="width: 80%; margin-top: 10px" /></ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <div>
         <h2>Géneros Músicales</h2>
       </div>
-        <swiper-container
-          effect="coverflow"
-          pagination="true"
-          slides-per-view="1"
-          style="width: 90%; height: auto"
-        >
-          <swiper-slide *ngFor="let genre of genres">
-            <ion-card class="card">
-              <img [src]="genre.image" [alt]="genre.title" />
-              <ion-card-header class="slider-content">
-                <ion-card-subtitle class="capitalize"
-                  >{{ genre.subtitle }}</ion-card-subtitle
-                >
-                <ion-card-title
-                  >{{ genre.title }}</ion-card-title
-                >
-              </ion-card-header>
-              <ion-card-content class="slider-content p">
-                <p class="reducir">{{genre.description}}</p>
-              </ion-card-content>
-            </ion-card>
-          </swiper-slide>
-        </swiper-container>
+      <swiper-container effect="coverflow" pagination="true" slides-per-view="1" style="width: 90%; height: auto">
+        <swiper-slide *ngFor="let genre of genres">
+          <ion-card class="card">
+            <img [src]="genre.image" [alt]="genre.title" />
+            <ion-card-header class="slider-content">
+              <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
+              <ion-card-title>{{ genre.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="slider-content p">
+              <p class="reducir">{{genre.description}}</p>
+            </ion-card-content>
+          </ion-card>
+        </swiper-slide>
+      </swiper-container>
       <div>
         <h2>Albúmes</h2>
       </div>
-        <div class="album-slider-wrapper">
-          <swiper-container
-            [slidesPerView]="3"
-            [spaceBetween]="10"
-            autoplay="true"
-            pagination="true"
-            style="width: 90%; height: 100%;"
-          >
-            <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)" >
-              <div class="slider-content">
-                <img [src]="album.image" />
-                <p>{{ album.name }}</p>
-              </div>
-            </swiper-slide>
-          </swiper-container>
-        </div>
+      <div class="album-slider-wrapper">
+        <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
+          style="width: 90%; height: auto;">
+          <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)">
+            <div class="slider-content">
+              <img [src]="album.image" />
+              <p>{{ album.name }}</p>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </div>
+      <div>
+        <h2>Artistas</h2>
+      </div>
+      <div class="album-slider-wrapper">
+        <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
+          style="width: 90%; height: auto;">
+          <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtists(artist.id)">
+            <div class="slider-content">
+              <img [src]="artist.image" />
+              <p>{{ artist.name }}</p>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </div>
+
     </ion-content>
   </div>
 </ion-app>
