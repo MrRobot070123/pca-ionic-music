@@ -25,7 +25,7 @@
       </ion-list>
     </ion-content>
   </ion-menu>
-  <div class="ion-page" id="main-content">
+  <div class="ion-page contenido" id="main-content">
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
@@ -40,8 +40,9 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div [style.background-color]="temaActual" [style.color]="textoActual">
+      <div>
         <h2>Géneros Músicales</h2>
+      </div>
         <swiper-container
           effect="coverflow"
           pagination="true"
@@ -49,16 +50,13 @@
           style="width: 90%; height: auto"
         >
           <swiper-slide *ngFor="let genre of genres">
-            <ion-card
-              [style.background-color]="sliderColorActual"
-              [style.color]="textoActual"
-            >
+            <ion-card class="card">
               <img [src]="genre.image" [alt]="genre.title" />
               <ion-card-header class="slider-content">
                 <ion-card-subtitle class="capitalize"
                   >{{ genre.subtitle }}</ion-card-subtitle
                 >
-                <ion-card-title [style.color]="textoActual"
+                <ion-card-title
                   >{{ genre.title }}</ion-card-title
                 >
               </ion-card-header>
@@ -68,6 +66,9 @@
             </ion-card>
           </swiper-slide>
         </swiper-container>
+      <div>
+        <h2>Albúmes</h2>
+      </div>
         <div class="album-slider-wrapper">
           <swiper-container
             [slidesPerView]="3"
@@ -84,7 +85,6 @@
             </swiper-slide>
           </swiper-container>
         </div>
-      </div>
     </ion-content>
   </div>
 </ion-app>

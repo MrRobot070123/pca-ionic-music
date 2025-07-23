@@ -12,19 +12,10 @@ import { SongsModalPage } from '../songs-modal/songs-modal.page';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [ CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], //Esto es necesario para utilizar swiper en Ionic
 })
 export class HomePage implements OnInit {
-  temaClaro = 'var(--color-claro)';
-  temaOscuro = 'var(--color-oscuro)';
-  temaActual = this.temaOscuro;
-  sliderClaro = 'var(--slider-claro)';
-  sliderOscuro = 'var(--slider-oscuro)';
-  sliderColorActual = this.sliderOscuro;
-  textoClaro = 'var(--texto-claro)';
-  textoOscuro = 'var(--texto-oscuro)';
-  textoActual= this.textoClaro;
   isToggled = false; //variable que controla el toggle
   tracks: any;
   albums: any;
@@ -32,7 +23,7 @@ export class HomePage implements OnInit {
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
     console.log('Toggle:', this.isToggled);
-    this.cambiarTema(); //llama a la funcion para cambiar el tema
+    this.cambiarTema(this.isToggled); //llama a la funcion para cambiar el tema
   }
 
   //Géneros
@@ -78,12 +69,12 @@ export class HomePage implements OnInit {
   ];
 
   constructor(
-    private storageService: StorageService, 
-    private router: Router, 
+    private storageService: StorageService,
+    private router: Router,
     private navCtl: NavController,
     private musicService: MusicService,
-    private modalCtrl : ModalController
-    ) {
+    private modalCtrl: ModalController
+  ) {
   }
 
   async ngOnInit() {
@@ -92,17 +83,17 @@ export class HomePage implements OnInit {
     await this.loadStoargeData();
   }
 
-  loadTracks(){
-    this.musicService.getTracks().then(tracks =>{
+  loadTracks() {
+    this.musicService.getTracks().then(tracks => {
       this.tracks = tracks;
-      console.log(this.tracks,"Las canciones");
+      console.log(this.tracks, "Las canciones");
     })
   }
 
-  loadAlbums(){
-    this.musicService.getAlbums().then(albums =>{
+  loadAlbums() {
+    this.musicService.getAlbums().then(albums => {
       this.albums = albums;
-      console.log(this.tracks,"los albums");
+      console.log(this.tracks, "los albums");
     })
   }
 
@@ -112,43 +103,25 @@ export class HomePage implements OnInit {
 
     if (fromIntro) {
       console.log('Ya vi la pagina de intro');
-        await this.storageService.remove('fromIntro');
+      await this.storageService.remove('fromIntro');
     }
   }
 
-  async cambiarTema() {
-
-    if(this.temaActual === this.temaClaro){
-      this.temaActual = this.temaOscuro;
-      this.sliderColorActual = this.sliderOscuro;
-      this.textoActual = this.textoClaro;
-      this.isToggled = true;
-      
-    } else{
-      this.temaActual = this.temaClaro;
-      this.sliderColorActual = this.sliderClaro;
-      this.textoActual = this.textoOscuro;
-      this.isToggled = false;
+  async cambiarTema(toggle: boolean) {
+    this.isToggled = toggle;
+    const body = document.body;
+    if (this.isToggled) {
+      body.classList.add('dark-theme');
+    } else {
+      body.classList.remove('dark-theme');
     }
-
-    await this.storageService.set('theme', this.temaActual);
-    await this.storageService.set('slider', this.sliderColorActual);
-    await this.storageService.set('font', this.textoActual);
     await this.storageService.set('toggle', this.isToggled);
-    console.log('Tema camabiado a:', this.temaActual);
   }
 
   async loadStoargeData() {
-    const savedTheme = await this.storageService.get('theme');
-    const savedSlider = await this.storageService.get('slider');
-    const savedFont = await this.storageService.get('font');
     const savedToggle = await this.storageService.get('toggle');
-    if (savedTheme) {
-      this.temaActual = savedTheme;
-      this.sliderColorActual = savedSlider;
-      this.textoActual= savedFont;
-      this.isToggled= savedToggle;
-      console.log('Tema cargado desde el storage:', this.temaActual);
+    if (savedToggle !== null) {
+      this.isToggled = savedToggle;
     }
   }
 
@@ -174,16 +147,16 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/intro');
   }
 
-  exit(){ // Cerrar sesion corregir la salida
-    this.storageService.set('login',false);
+  exit() { // Cerrar sesion corregir la salida
+    this.storageService.set('login', false);
     console.log('Cerrando sesion');
     this.navCtl.navigateBack('/login');
   }
 
-  async showSongs(albumId: string){
+  async showSongs(albumId: string) {
     console.log("album id: ", albumId)
     const songs = await this.musicService.getSongsByAlbum(albumId);
-    console.log("songs: ",songs)
+    console.log("songs: ", songs)
     const modal = await this.modalCtrl.create({
       component: SongsModalPage,
       componentProps: {

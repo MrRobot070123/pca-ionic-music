@@ -52,6 +52,11 @@ export class IntroPage {
 
   constructor(private storageService: StorageService, private router: Router) {}
 
+  async ngOnInit() {
+    const body = document.body;
+    body.classList.add('dark-theme-const');
+  }
+  
   async goHome() {  
     await this.storageService.set('fromIntro', true); // marcador de navegación
     this.router.navigateByUrl('/home');

@@ -1,18 +1,25 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
 :root {
-    --color-claro: #dbdbdb;
-    --color-oscuro: #001822;
+    --ion-background-color: #dbdbdb;
+    --ion-text-color: #000000;
+    --ion-slider-color: #e6e6fa;
     --espaciado-base: 1rem;
     --espaciado-grande: 2rem;
-    --slider-oscuro: #7475754a;
-    --texto-claro: #ffffff;
-    --slider-claro: #e6e6fa;
-    --texto-oscuro: #000000;
     --swiper-pagination-bullet-inactive-color: rgb(171, 158, 158);
     --swiper-pagination-bullet-inactive-opacity: 2;
     --swiper-pagination-color:#0098da;
     --color:#0098da;
+}
+
+.dark-theme{
+    --ion-background-color: #001822;
+    --ion-text-color: #ffffff;
+    --ion-slider-color: #7475754a;
+}
+
+.dark-theme-const{
+    --ion-background-color-oscuro: #001822;
 }
 
 ion-title {
