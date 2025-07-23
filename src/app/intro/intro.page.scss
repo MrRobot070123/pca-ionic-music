@@ -1,5 +1,5 @@
 :host {
-  --ion-background-color: var(--ion-background-color-oscuro) no-repeat center center / cover !important;
+  --ion-background-color: var(--ion-background-color-oscuro) !important;
 }
 
 .slider-content {
@@ -33,7 +33,7 @@ img{
 
 ion-button{
   margin: 0;
-  --background: #0098da;
+  --background: #0099da72;
   --background-activated: #0a0a0a83;
 }
 

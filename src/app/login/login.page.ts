@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
+import { AlertController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { AuthService } from '../services/auth.service';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule]
 })
 export class LoginPage implements OnInit {
-  
+  confirmacion = false;
   loginForm: FormGroup;
   errorMessage: String = "";
 
@@ -35,7 +36,12 @@ export class LoginPage implements OnInit {
     ]
   }
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private navCtrl: NavController) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private navCtrl: NavController,
+    private alertController: AlertController,
+  ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
         '',
@@ -58,18 +64,37 @@ export class LoginPage implements OnInit {
     this.loginForm.setValue
   }
 
-  loginUser(credentials: any){
+  //Metodo para mostrar mensaje de login
+  async presentAlert(confirmacion: boolean) {
+    const confirma = await this.alertController.create({
+      header: '¡Login Correcto!',
+      message: 'Usuario ingresó exitosamente',
+      buttons: ['Ok'],
+    });
+    const declinacion = await this.alertController.create({
+      header: '¡Credenciales incorrectas!',
+      message: 'Por favor valide las credenciales y vuelva a intentarlo',
+      buttons: ['Ok'],
+    });
+    if (confirmacion) {
+      await confirma.present();
+      this.navCtrl.navigateForward("/home");
+    } else {
+      await declinacion.present();
+    }
+  }
+
+  loginUser(credentials: any) {
     console.log(credentials);
     this.authService.loginUserAuth(credentials).then(respuesta => {
-      console.log(respuesta);
-      this.errorMessage ="";
-      this.navCtrl.navigateForward("/home");
-
+      this.presentAlert(this.confirmacion = true);
+      this.errorMessage = "";
     }).catch(error => {
       this.errorMessage = error;
+      this.presentAlert(this.confirmacion);
     })
   }
-  redirigirRegister(){
+  redirigirRegister() {
     this.navCtrl.navigateForward('/register');
   }
 }

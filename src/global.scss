@@ -40,3 +40,15 @@ ion-title {
   color: #000000 !important;
   font-weight: bold;
 }
+
+.alert-title {
+  color: black !important; /* Cambia esto al color que necesites */
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-message {
+  color: black !important; // solo el texto del mensaje
+  font-size: 16px;
+  text-align: center;
+}
