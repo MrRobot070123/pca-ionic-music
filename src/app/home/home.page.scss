@@ -64,6 +64,9 @@ ion-menu::part(container) {
   box-shadow: 4px 0px 16px #0098da;
 }
 
-ion-col{
-  margin: auto;
+/*nuevos estilos*/
+.album-slider-wrapper {
+  width: 90%;
+  margin: 0 auto; /* centra el slider */
+  padding: 10px 0;
 }

@@ -1,4 +1,4 @@
-<ion-app> 
+<ion-app>
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
@@ -8,7 +8,13 @@
     <ion-content>
       <ion-list>
         <ion-item>
-          <ion-toggle aria-label="Tertiary toggle" color="tertiary" (ionChange)="onToggleChange($event)" [checked]="isToggled">Tema Oscuro</ion-toggle>
+          <ion-toggle
+            aria-label="Tertiary toggle"
+            color="tertiary"
+            (ionChange)="onToggleChange($event)"
+            [checked]="isToggled"
+            >Tema Oscuro</ion-toggle
+          >
         </ion-item>
         <ion-item>
           <ion-button (click)="goBack()">Volver al intro</ion-button>
@@ -25,7 +31,12 @@
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title><img src="/assets/img/Logo_500x250.png" alt="Logo_Ape7ron" style="width: 80%; margin-top: 10px;"></ion-title>
+        <ion-title
+          ><img
+            src="/assets/img/Logo_500x250.png"
+            alt="Logo_Ape7ron"
+            style="width: 80%; margin-top: 10px"
+        /></ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -35,7 +46,7 @@
           effect="coverflow"
           pagination="true"
           slides-per-view="1"
-          style="width: 90%; height: 80%"
+          style="width: 90%; height: auto"
         >
           <swiper-slide *ngFor="let genre of genres">
             <ion-card
@@ -57,54 +68,22 @@
             </ion-card>
           </swiper-slide>
         </swiper-container>
-        <div>
-          <h2>Destacados</h2>
+        <div class="album-slider-wrapper">
+          <swiper-container
+            [slidesPerView]="3"
+            [spaceBetween]="10"
+            autoplay="true"
+            pagination="true"
+            style="width: 90%; height: 100%;"
+          >
+            <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)" >
+              <div class="slider-content">
+                <img [src]="album.image" />
+                <p>{{ album.name }}</p>
+              </div>
+            </swiper-slide>
+          </swiper-container>
         </div>
-        <swiper-container
-          autoplay="true"
-          pagination="true"
-          slides-per-view="1.1"
-          style="width: 90%; height: 30%"
-        >
-          <swiper-slide *ngFor="let destacado of destacados">
-            <ion-card
-              [style.background-color]="sliderColorActual"
-              class="horizontal-card"
-            >
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="auto"
-                    ><img [src]="destacado.image" [alt]="destacado.title" style="width: 80px; height: auto;"
-                  /></ion-col>
-                  <ion-col size="6"
-                    ><div class="text-content">
-                      <ion-card-title
-                        class="capitalize"
-                        [style.color]="textoActual"
-                        >{{ destacado.title }}</ion-card-title
-                      >
-                      <ion-card-subtitle
-                        style="
-                          margin: 0;
-                          font-size: 15px;
-                          text-transform: capitalize;
-                        "
-                        [style.color]="textoActual"
-                      >
-                        {{ destacado.subtitle }}
-                      </ion-card-subtitle>
-                    </div></ion-col
-                  >
-                  <ion-col
-                    ><img style="width: 60px; background-color: #e6e6fa;"
-                      src="assets\img\caret-forward-outline.svg"
-                      alt="logo-play"
-                  /></ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card>
-          </swiper-slide>
-        </swiper-container>
       </div>
     </ion-content>
   </div>

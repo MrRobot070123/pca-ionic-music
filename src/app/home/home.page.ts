@@ -1,32 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
-  IonCard, 
-  IonCardContent, 
-  IonCardHeader, 
-  IonCardSubtitle, 
-  IonCardTitle, 
-  IonButton, 
-  IonApp, 
-  IonButtons, 
-  IonContent,
-  IonHeader,
-  IonMenu,
-  IonMenuButton,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController, ModalController } from '@ionic/angular';
+import { MusicService } from '../services/music.service';
+import { SongsModalPage } from '../songs-modal/songs-modal.page';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, CommonModule,IonApp, IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonTitle, IonToolbar],
+  imports: [ CommonModule, IonicModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], //Esto es necesario para utilizar swiper en Ionic
 })
 export class HomePage implements OnInit {
@@ -40,6 +26,8 @@ export class HomePage implements OnInit {
   textoOscuro = 'var(--texto-oscuro)';
   textoActual= this.textoClaro;
   isToggled = false; //variable que controla el toggle
+  tracks: any;
+  albums: any;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -89,41 +77,33 @@ export class HomePage implements OnInit {
     }
   ];
 
-  //Destacados
-  destacados = [
-    {
-      title: 'Slim Shady',
-      subtitle: 'Eminem',
-      image: 'assets/img/Album/Slim Shady.png',
-    },
-    {
-      title: 'Dont HMU',
-      subtitle: 'Anella Herim',
-      image: 'assets/img/Album/Dont HMU.png',
-    },
-    {
-      title: 'La Plena',
-      subtitle: 'Beelé',
-      image: 'assets/img/Album/La plena.png',
-    },
-    {
-      title: 'Las cartas',
-      subtitle: 'Luister La voz',
-      image: 'assets/img/Album/Las cartas.png',
-    },
-    {
-      title: 'Thinking Out Loud',
-      subtitle: 'Ed Sheeran',
-      image: 'assets/img/Album/Thinking out loud.png',
-    }
-  ]
-
-  constructor(private storageService: StorageService, private router: Router, private navCtl: NavController) {
+  constructor(
+    private storageService: StorageService, 
+    private router: Router, 
+    private navCtl: NavController,
+    private musicService: MusicService,
+    private modalCtrl : ModalController
+    ) {
   }
 
   async ngOnInit() {
+    this.loadAlbums();
+    this.loadTracks();
     await this.loadStoargeData();
-    //this.simularCarga();
+  }
+
+  loadTracks(){
+    this.musicService.getTracks().then(tracks =>{
+      this.tracks = tracks;
+      console.log(this.tracks,"Las canciones");
+    })
+  }
+
+  loadAlbums(){
+    this.musicService.getAlbums().then(albums =>{
+      this.albums = albums;
+      console.log(this.tracks,"los albums");
+    })
   }
 
   async ionViewWillEnter() {
@@ -198,5 +178,18 @@ export class HomePage implements OnInit {
     this.storageService.set('login',false);
     console.log('Cerrando sesion');
     this.navCtl.navigateBack('/login');
+  }
+
+  async showSongs(albumId: string){
+    console.log("album id: ", albumId)
+    const songs = await this.musicService.getSongsByAlbum(albumId);
+    console.log("songs: ",songs)
+    const modal = await this.modalCtrl.create({
+      component: SongsModalPage,
+      componentProps: {
+        songs: songs
+      }
+    });
+    modal.present();
   }
 }
