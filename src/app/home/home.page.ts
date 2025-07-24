@@ -31,7 +31,6 @@ export class HomePage implements OnInit {
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
-    console.log('Toggle:', this.isToggled);
     this.cambiarTema(this.isToggled); //llama a la funcion para cambiar el tema
   }
 
@@ -96,21 +95,18 @@ export class HomePage implements OnInit {
   loadTracks() {
     this.musicService.getTracks().then(tracks => {
       this.tracks = tracks;
-      console.log(this.tracks, "Las canciones");
     })
   }
 
   loadAlbums() {
     this.musicService.getAlbums().then(albums => {
       this.albums = albums;
-      console.log(this.tracks, "los albums");
     })
   }
 
   loadArtists() {
     this.musicService.getArtists().then(artists => {
       this.artists = artists;
-      console.log(this.tracks, "los artistas");
     })
   }
 
@@ -140,6 +136,13 @@ export class HomePage implements OnInit {
     if (savedToggle !== null) {
       this.isToggled = savedToggle;
     }
+    const body = document.body;
+    if (this.isToggled) {
+      body.classList.add('dark-theme');
+    } else {
+      body.classList.remove('dark-theme');
+    }
+    await this.storageService.set('toggle', this.isToggled);
   }
 
   /*async simularCarga(){
@@ -160,7 +163,6 @@ export class HomePage implements OnInit {
   }*/
 
   goBack() {
-    console.log('Volver a la página anterior');
     this.router.navigateByUrl('/intro');
   }
 
@@ -182,7 +184,6 @@ export class HomePage implements OnInit {
     });
     modal.onDidDismiss().then((result) => {
       if(result.data){
-        console.log("cancion recibida ", result.data);
         this.song = result.data;
       }
     })
@@ -192,7 +193,6 @@ export class HomePage implements OnInit {
   async showSongsByArtists(artistId: string) {
     console.log("artista id: ", artistId)
     const songs = await this.musicService.getSongsByArtists(artistId);
-    console.log("songs: ", songs)
     const modal = await this.modalCtrl.create({
       component: SongsModalPage,
       componentProps: {

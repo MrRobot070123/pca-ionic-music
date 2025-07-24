@@ -77,31 +77,30 @@
         </swiper-container>
       </div>
     </ion-content>  
-    <ion-footer>
-      <ion-grid>
-        <ion-row>
-          <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime)|| "0:00"}}</ion-col>
-          <ion-col class="ion-text-end">{{formatTime(currentSong?.duration) || "0:00"}}</ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-progress-bar [value]="newTime"></ion-progress-bar>
-      <ion-grip>
-        <ion-row>
-          <ion-col size="1">
-            <!--Darle funcion a favorito y quitar de favorito asi como play and pause-->
-            <ion-icon name="heart"></ion-icon>
-          </ion-col>
-          <ion-col size="10">
-            <ion-text color="primary">
-              {{song.name || "N/A"}}
-            </ion-text>
-          </ion-col>
-          <ion-col size="1">
-            <ion-icon name="play" *ngIf="!song.playing" (click)="play()"></ion-icon>
-            <ion-icon name="pause" *ngIf="song.playing" (click)="pausa()"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grip>
-    </ion-footer>
+<ion-footer class="music-footer">
+  <ion-grid class="time-display">
+    <ion-row>
+      <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime) || "0:00"}}</ion-col>
+      <ion-col class="ion-text-end">{{formatTime(currentSong?.duration) || "0:00"}}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-progress-bar class="player-progress-bar" [value]="newTime"></ion-progress-bar>
+
+  <div class="footer-controls">
+    <ion-icon name="heart-outline" class="footer-icon"></ion-icon>
+
+    <ion-text class="footer-song-name">
+      {{song.name || "N/A"}}
+    </ion-text>
+
+    <ion-icon
+      [name]="song.playing ? 'pause' : 'play'"
+      class="footer-icon"
+      (click)="song.playing ? pausa() : play()">
+    </ion-icon>
+  </div>
+</ion-footer>
+
   </div>
 </ion-app>
