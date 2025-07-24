@@ -76,7 +76,14 @@
           </swiper-slide>
         </swiper-container>
       </div>
-
-    </ion-content>
+    </ion-content>  
+    <ion-footer>
+      <ion-text color="danger" *ngIf="!song?.name">
+        <h2>Aparecerá la cancion</h2>
+      </ion-text>
+      <ion-text color="primary">
+        <h2>{{song.name}}</h2>
+      </ion-text>
+    </ion-footer>
   </div>
 </ion-app>

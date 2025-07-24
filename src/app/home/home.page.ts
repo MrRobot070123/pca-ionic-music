@@ -20,6 +20,13 @@ export class HomePage implements OnInit {
   tracks: any;
   albums: any;
   artists: any;
+  song: any={
+    name: '',
+    preview_url: '',
+    playing: false
+  };
+
+  currentSong: any;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -172,6 +179,12 @@ export class HomePage implements OnInit {
         songs: songs
       }
     });
+    modal.onDidDismiss().then((result) => {
+      if(result.data){
+        console.log("cancion recibida ", result.data);
+        this.song = result.data;
+      }
+    })
     modal.present();
   }
 
