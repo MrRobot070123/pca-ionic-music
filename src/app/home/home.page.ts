@@ -27,6 +27,7 @@ export class HomePage implements OnInit {
   };
 
   currentSong: any;
+  newTime: any;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -198,8 +199,33 @@ export class HomePage implements OnInit {
         songs: songs
       }
     });
+    modal.onDidDismiss().then((result) => {
+      if(result.data){
+        console.log("cancion recibida ", result.data);
+        this.song = result.data;
+      }
+    })
     modal.present();
   }
 
-  //crear funcion showSongsByArtists que abrirá el modal ya creado y enviara en los promps las canciones del artistas
+  play(){
+    this.currentSong = new Audio(this.song.preview_url);
+    this.currentSong.play();
+    this.currentSong.addEventListener("timeupdate", ()=>{
+      this.newTime = this.currentSong.currentTime / this.currentSong.duration;
+    })
+    this.song.playing = true;
+  }
+
+  pausa(){
+    this.currentSong.pause();
+    this.song.playing = false;
+  }
+
+  formatTime(seconds: number){
+    if(!seconds || isNaN(seconds)) return "0:00";
+    const minutes = Math.floor(seconds/60);
+    const remaningSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remaningSeconds.toString().padStart(2, '0')}`
+  }
 }
