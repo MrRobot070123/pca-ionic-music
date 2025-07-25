@@ -24,8 +24,7 @@ export class MusicService {
   getSongsByAlbum(albumId: string){
     return fetch(`${this.urlServer}/tracks/album/${albumId}`).then(
       response => response.json()
-    )
-    
+    ) 
   }
 
   getArtists(){
@@ -41,8 +40,10 @@ export class MusicService {
     
   }
 
-
-
-  //crear un servicio para obtener los artistas desde el servidor API
-  //crear un servicio para obtener las canciones de un artista /tracks/artist/1
+  getFavorite(userId: String){
+    console.log(userId)
+    return fetch(`${this.urlServer}/user_favorites/${userId}`).then(
+      response => response.json()
+    )
+  }
 }

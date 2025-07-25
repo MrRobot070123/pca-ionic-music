@@ -64,36 +64,11 @@ export class LoginPage implements OnInit {
     this.loginForm.setValue
   }
 
-  //Metodo para mostrar mensaje de login
-  async presentAlert(confirmacion: boolean) {
-    const confirma = await this.alertController.create({
-      header: '¡Login Correcto!',
-      message: 'Usuario ingresó exitosamente',
-      buttons: ['Ok'],
-    });
-    const declinacion = await this.alertController.create({
-      header: '¡Credenciales incorrectas!',
-      message: 'Por favor valide las credenciales y vuelva a intentarlo',
-      buttons: ['Ok'],
-    });
-    if (confirmacion) {
-      await confirma.present();
-      this.navCtrl.navigateForward("/home");
-    } else {
-      await declinacion.present();
-    }
-  }
-
   loginUser(credentials: any) {
     console.log(credentials);
-    this.authService.loginUserAuth(credentials).then(respuesta => {
-      this.presentAlert(this.confirmacion = true);
-      this.errorMessage = "";
-    }).catch(error => {
-      this.errorMessage = error;
-      this.presentAlert(this.confirmacion);
-    })
+    this.authService.loginUserAuth(credentials)
   }
+  
   redirigirRegister() {
     this.navCtrl.navigateForward('/register');
   }

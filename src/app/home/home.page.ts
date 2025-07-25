@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { IonicModule, NavController, ModalController } from '@ionic/angular';
 import { MusicService } from '../services/music.service';
 import { SongsModalPage } from '../songs-modal/songs-modal.page';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class HomePage implements OnInit {
   currentSong: any;
   newTime: any;
   liked: boolean = false;
+  favorites: any;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -81,7 +83,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private navCtl: NavController,
     private musicService: MusicService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private authService: AuthService
   ) {
   }
 
@@ -89,6 +92,7 @@ export class HomePage implements OnInit {
     this.loadAlbums();
     this.loadArtists();
     this.loadTracks();
+    this.loadFavorite();
     await this.loadStoargeData();
   }
 
@@ -107,6 +111,12 @@ export class HomePage implements OnInit {
   loadArtists() {
     this.musicService.getArtists().then(artists => {
       this.artists = artists;
+    })
+  }
+
+  loadFavorite() {
+    this.musicService.getFavorite(this.authService.userId()).then(favorite => {
+      this.favorites = favorite;
     })
   }
 
@@ -151,6 +161,7 @@ export class HomePage implements OnInit {
 
   exit() { // Cerrar sesion corregir la salida
     this.storageService.set('login', false);
+    this.storageService.set
     console.log('Cerrando sesion');
     this.navCtl.navigateBack('/login');
   }
@@ -185,6 +196,22 @@ export class HomePage implements OnInit {
     modal.onDidDismiss().then((result) => {
       if(result.data){
         console.log("cancion recibida ", result.data);
+        this.song = result.data;
+      }
+    })
+    modal.present();
+  }
+
+  async showFavorites(favorite: string) {
+    const songs = await this.musicService.getFavorite(favorite);
+    const modal = await this.modalCtrl.create({
+      component: SongsModalPage,
+      componentProps: {
+        songs: songs
+      }
+    });
+    modal.onDidDismiss().then((result) => {
+      if(result.data){
         this.song = result.data;
       }
     })

@@ -79,6 +79,20 @@
           </swiper-slide>
         </swiper-container>
       </div>
+      <div>
+        <h2>Favoritos</h2>
+      </div>
+      <div class="album-slider-wrapper">
+        <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
+          style="width: 90%; height: auto;">
+          <swiper-slide *ngFor="let favorite of favorites" (click)="showFavorites(favorite.id)">
+            <div class="slider-content">
+              <!--Colocar img por defecto-->
+              <p>{{ favorite.name }}</p>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </div>
     </ion-content>
     <ion-footer class="music-footer">
       <ion-grid class="time-display">
