@@ -25,9 +25,9 @@ export class HomePage implements OnInit {
     preview_url: '',
     playing: false
   };
-
   currentSong: any;
   newTime: any;
+  liked: boolean = false;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -145,23 +145,6 @@ export class HomePage implements OnInit {
     await this.storageService.set('toggle', this.isToggled);
   }
 
-  /*async simularCarga(){
-    const data = await this.obtenerData();
-    console.log('Datos obtenidos:', data);
-  }
-
-  obtenerData(){
-    return new Promise ((resolve, reject) => {
-      try {
-        setTimeout(()=>{
-          resolve(['Pop','Jazz','Rock','Hip-Hop','Reggae']);
-        },3000);
-      } catch (error) {
-        reject('Error al obtener los datos');
-      }
-    })
-  }*/
-
   goBack() {
     this.router.navigateByUrl('/intro');
   }
@@ -228,4 +211,15 @@ export class HomePage implements OnInit {
     const remaningSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remaningSeconds.toString().padStart(2, '0')}`
   }
+
+  //Animacion del like
+  toggleLike(){
+  this.liked = !this.liked;
+  if (this.liked) {
+    console.log('Canción marcada como favorita');
+    } else {
+      console.log('Favorito removido');
+    }
+  }
+
 }

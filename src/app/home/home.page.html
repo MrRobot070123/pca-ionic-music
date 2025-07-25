@@ -8,14 +8,17 @@
     <ion-content>
       <ion-list>
         <ion-item>
+          <ion-icon aria-hidden="true" name="color-palette" slot="start"></ion-icon>
           <ion-toggle aria-label="Tertiary toggle" color="tertiary" (ionChange)="onToggleChange($event)"
-            [checked]="isToggled">Tema Oscuro</ion-toggle>
+            [checked]="isToggled">Color Oscuro</ion-toggle>
         </ion-item>
-        <ion-item>
-          <ion-button (click)="goBack()">Volver al intro</ion-button>
+        <ion-item (click)="goBack()">
+          <ion-icon aria-hidden="true" name="home" slot="start"></ion-icon>
+          <ion-label>Volver a la intro</ion-label>  
         </ion-item>
-        <ion-item>
-          <ion-button (click)="exit()">Cerrar sesión</ion-button>
+        <ion-item (click)="exit()">
+          <ion-icon aria-hidden="true" name="exit" slot="start"></ion-icon>
+          <ion-label>Cerrar sesión</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -76,31 +79,31 @@
           </swiper-slide>
         </swiper-container>
       </div>
-    </ion-content>  
-<ion-footer class="music-footer">
-  <ion-grid class="time-display">
-    <ion-row>
-      <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime) || "0:00"}}</ion-col>
-      <ion-col class="ion-text-end">{{formatTime(currentSong?.duration) || "0:00"}}</ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-progress-bar class="player-progress-bar" [value]="newTime"></ion-progress-bar>
-
-  <div class="footer-controls">
-    <ion-icon name="heart-outline" class="footer-icon"></ion-icon>
-
-    <ion-text class="footer-song-name">
-      {{song.name || "N/A"}}
-    </ion-text>
-
-    <ion-icon
-      [name]="song.playing ? 'pause' : 'play'"
-      class="footer-icon"
-      (click)="song.playing ? pausa() : play()">
-    </ion-icon>
-  </div>
-</ion-footer>
-
+    </ion-content>
+    <ion-footer class="music-footer">
+      <ion-grid class="time-display">
+        <ion-row>
+          <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime) || "0:00"}}</ion-col>
+          <ion-col class="ion-text-end">{{formatTime(currentSong?.duration) || "0:00"}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="footer-controls">
+        <ion-progress-bar class="player-progress-bar" [value]="newTime"></ion-progress-bar>
+      </div>
+      <div class="footer-controls">
+        <ion-icon 
+          [name]="liked ? 'heart' : 'heart-outline'" 
+          [color]="liked ? 'danger' : ''"
+          class="footer-icon heart-icon"
+          (click)="toggleLike()">
+        </ion-icon>
+        <ion-text class="footer-song-name">
+          {{song.name || "N/A"}}
+        </ion-text>
+        <ion-icon [name]="song.playing ? 'pause' : 'play'" class="footer-icon"
+          (click)="song.playing ? pausa() : play()">
+        </ion-icon>
+      </div>
+    </ion-footer>
   </div>
 </ion-app>

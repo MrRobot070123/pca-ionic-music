@@ -1,4 +1,4 @@
-<ion-content class="login-background" fullscreen>
+<ion-content class="login-background" fullscreen [scrollY]="false">
   <div class="login-container">
     <div class="login-card">
       <figure class="profile-default-image ion-text-center">
@@ -8,55 +8,36 @@
       <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
         <ion-item class="input-item">
           <ion-icon slot="start" name="person-outline"></ion-icon>
-          <ion-input
-            label="Email"
-            labelPlacement="stacked"
-            placeholder="Escribe tu email"
-            formControlName="email"
-          ></ion-input>
+          <ion-input label="Email" labelPlacement="stacked" placeholder="Escribe tu email"
+            formControlName="email"></ion-input>
         </ion-item>
         <div class="mensaje-error-central">
           <ng-container *ngFor="let validation of validation_messages.email">
-            <div
-              *ngIf="(
+            <div *ngIf="(
           loginForm.get('email')?.hasError(validation.type) && loginForm.get('email')?.dirty
-         )"
-            >
+         )">
               {{validation.message}}
             </div>
           </ng-container>
         </div>
         <ion-item class="input-item">
           <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-          <ion-input
-            label="Contraseña"
-            labelPlacement="stacked"
-            placeholder="Tu contraseña"
-            type="password"
-            formControlName="password"
-          ></ion-input>
+          <ion-input label="Contraseña" labelPlacement="stacked" placeholder="Tu contraseña" type="password"
+            formControlName="password"></ion-input>
         </ion-item>
         <div class="mensaje-error-central">
           <ng-container *ngFor="let validation of validation_messages.password">
-            <div
-              *ngIf="(
+            <div *ngIf="(
           loginForm.get('password')?.hasError(validation.type) && loginForm.get('password')?.dirty
-         )"
-            >
+         )">
               {{validation.message}}
             </div>
           </ng-container>
         </div>
         <ion-button expand="block" type="submit" class="login-button" [disabled]="!loginForm.valid">
-          LOGIN
+          Iniciar sesión
         </ion-button>
-        <ion-button
-          expand="block"
-          fill="clear"
-          style="color: #fff"
-          shape="round"
-          (click)="redirigirRegister()"
-        >
+        <ion-button expand="block" fill="clear" style="color: #fff" shape="round" (click)="redirigirRegister()">
           Regístrate
         </ion-button>
       </form>
