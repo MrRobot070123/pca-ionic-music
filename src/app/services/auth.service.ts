@@ -10,7 +10,6 @@ import { MusicService } from './music.service';
 export class AuthService {
 
   urlServer = "https://music.fly.dev";
-  confirmacion = false;
   responseBody: any;
 
   constructor(

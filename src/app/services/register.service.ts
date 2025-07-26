@@ -8,7 +8,7 @@ import {NavController } from '@ionic/angular';
 export class RegisterService {
 
   urlServer = "https://music.fly.dev";
-  response : any
+  responseBody : any
 
   constructor(
     private alertController : AlertController,
@@ -34,7 +34,7 @@ export class RegisterService {
       body: JSON.stringify(body)
     })
       .then(async response => {
-        const responseBody = await response.json().catch(() => null);
+        this.responseBody = await response.json().catch(() => null);
         if (!response.ok) {         
           return {
             status: "ERROR",
@@ -46,11 +46,11 @@ export class RegisterService {
 
         return {
           status: "OK",
-          data: responseBody
+          data: this.responseBody
         };
       })
       .catch(error => {
-        console.log(error, "error authservice")
+        console.log(error, "error registerservice")
         return {
           status: "ERROR",
           msg: "No se pudo conectar al servidor"

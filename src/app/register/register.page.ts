@@ -106,10 +106,10 @@ export class RegisterPage implements OnInit {
   }
 
   //Metodo para mostrar mensaje de registro
-  async presentAlert(confirmacion: boolean, mensaje: string = '') {
+  async presentAlert(confirmacion: boolean) {
     const confirma = await this.alertController.create({
       header: confirmacion ? 'Registro Correcto' : 'Error de registro de sesión',
-      message: mensaje  || (confirmacion ? '¡Usuario ingresó exitosamente!' : '¡Credenciales incorrectas!'),
+      message:  confirmacion ? '¡Usuario ingresó exitosamente!' : '¡Credenciales incorrectas!',
       buttons: ['Ok'],
     });
     await confirma.present();
@@ -117,19 +117,25 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() { }
 
+  //Limpiar formulario en el redireccionamiento
+  ionViewWillEnter() {
+    this.registerForm.reset();
+  }
 
   //Validar y registrar usuarios
-  async registerUser(credentials: any) {
+  registerUser(credentials: any) {
     console.log(credentials);
     this.registerService.register(credentials).then(response => {
         if (response.status === "OK") {
+          console.log("Response: ", response);
           const data = (response as { status: "OK"; data: any }).data;
-          this.presentAlert(true, "Hola " + data.user.name + " te registraste con éxito");
+          this.presentAlert(true);
           this.redirigirLogin()
       } else {
-        this.presentAlert(false, response.msg);
+        this.presentAlert(false);
       }
     }).catch(error => {
+      console.log("No pase a redirigir")
       console.log(error)
     })
   }

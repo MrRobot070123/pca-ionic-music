@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonAvatar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonAvatar, IonIcon } from '@ionic/angular/standalone';
 import { NavParams, ModalController } from '@ionic/angular';
 
 
@@ -10,7 +10,7 @@ import { NavParams, ModalController } from '@ionic/angular';
   templateUrl: './songs-modal.page.html',
   styleUrls: ['./songs-modal.page.scss'],
   standalone: true,
-  imports: [IonAvatar, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonIcon, IonAvatar, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class SongsModalPage implements OnInit {
 

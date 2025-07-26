@@ -63,7 +63,10 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm.setValue
+  }
+
+  ionViewWillEnter() {
+    this.loginForm.reset();
   }
 
   loginUser(credentials: any) {
