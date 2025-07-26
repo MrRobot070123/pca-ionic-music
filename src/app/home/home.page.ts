@@ -161,7 +161,6 @@ export class HomePage implements OnInit {
 
   exit() { // Cerrar sesion corregir la salida
     this.storageService.set('login', false);
-    this.storageService.set
     console.log('Cerrando sesion');
     this.navCtl.navigateBack('/login');
   }

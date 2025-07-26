@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, F
 import { IonicModule, NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { AlertController } from '@ionic/angular/standalone';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -41,6 +42,7 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController,
     private alertController: AlertController,
+    private storageService : StorageService
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -93,7 +95,8 @@ export class LoginPage implements OnInit {
     this.navCtrl.navigateForward('/register');
   }
 
-   redirigirHome() {
+  async redirigirHome() {
+    await this.storageService.set('login', true);
     this.navCtrl.navigateForward('/home');
   }
 }

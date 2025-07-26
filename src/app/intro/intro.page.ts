@@ -58,7 +58,14 @@ export class IntroPage {
   }
   
   async goHome() {  
-    await this.storageService.set('fromIntro', true); // marcador de navegación
-    this.router.navigateByUrl('/home');
+    const login = await this.storageService.get('login');
+    console.log("Login es: " ,login)
+    if(login){
+      await this.storageService.set('fromIntro', true); // marcador de navegación
+      this.router.navigateByUrl('/home');
+    }else{
+      console.log("Ingresa credenciales primero");
+      this.router.navigateByUrl('/login');
+    }
   }
 }

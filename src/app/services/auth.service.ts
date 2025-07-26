@@ -11,7 +11,7 @@ export class AuthService {
 
   urlServer = "https://music.fly.dev";
   confirmacion = false;
-  response: any;
+  responseBody: any;
 
   constructor(
     private storageService: StorageService,
@@ -20,19 +20,7 @@ export class AuthService {
     private musicService: MusicService
   ) { }
 
-
-  /*async loginUserAuth(credentials: any) {
-    this.response = await this.login(credentials);
-
-    if (this.response.status === "OK") {
-      this.presentAlert(true, "Bienvenido " + this.response.user.name);
-      this.goHome();
-    } else {
-      this.presentAlert(false, this.response.msg);
-    }
-  }*/
-
-  login(credenciales: any) {
+  async login(credenciales: any) {
     const body = {
       user: {
         email: credenciales.email,
@@ -48,18 +36,19 @@ export class AuthService {
       body: JSON.stringify(body)
     })
       .then(async response => {
-        const responseBody = await response.json().catch(() => null);
+        this.responseBody = await response.json().catch(() => null);
         if (!response.ok) {         
           return {
             status: "ERROR",
             code: response.status,
             msg: "Credenciales incorrectas"
           };
+
         }
 
         return {
           status: "OK",
-          data: responseBody
+          data: this.responseBody
         };
       })
       .catch(error => {
@@ -72,9 +61,8 @@ export class AuthService {
   }
 
   userId() {
-    return this.response.user.id;
+    return this.responseBody.user.id;
   }
-
 
   async goHome() {
     await this.storageService.set('login', true); // marcador de navegación

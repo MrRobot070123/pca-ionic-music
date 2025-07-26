@@ -106,23 +106,13 @@ export class RegisterPage implements OnInit {
   }
 
   //Metodo para mostrar mensaje de registro
-  async presentAlert(confirmacion: boolean) {
+  async presentAlert(confirmacion: boolean, mensaje: string = '') {
     const confirma = await this.alertController.create({
-      header: 'Usuario creado',
-      message: '¡Su usuario fue creado exitosamente!',
+      header: confirmacion ? 'Registro Correcto' : 'Error de registro de sesión',
+      message: mensaje  || (confirmacion ? '¡Usuario ingresó exitosamente!' : '¡Credenciales incorrectas!'),
       buttons: ['Ok'],
     });
-    const declinacion = await this.alertController.create({
-      header: 'Usuario no creado',
-      message: '¡La cuenta ya existe en el sistema!',
-      buttons: ['Ok'],
-    });
-    if (confirmacion) {
-      await confirma.present();
-
-    } else {
-      await declinacion.present();
-    }
+    await confirma.present();
   }
 
   ngOnInit() { }
@@ -131,7 +121,17 @@ export class RegisterPage implements OnInit {
   //Validar y registrar usuarios
   async registerUser(credentials: any) {
     console.log(credentials);
-    this.registerService.serviceRegisterUser(credentials)
+    this.registerService.register(credentials).then(response => {
+        if (response.status === "OK") {
+          const data = (response as { status: "OK"; data: any }).data;
+          this.presentAlert(true, "Hola " + data.user.name + " te registraste con éxito");
+          this.redirigirLogin()
+      } else {
+        this.presentAlert(false, response.msg);
+      }
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   redirigirLogin(){
