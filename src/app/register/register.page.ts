@@ -12,7 +12,6 @@ import {
   FormControl,
 } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
-import { StorageService } from '../services/storage.service';
 import { AlertController } from '@ionic/angular/standalone';
 import { RegisterService } from '../services/register.service';
 
@@ -35,7 +34,16 @@ export class RegisterPage implements OnInit {
       },
       {
         type: 'name',
-        message: 'Por favor escribe nombre y apellido',
+        message: 'El nombre es obligatorio',
+      },
+    ],
+    last_name: [
+      {
+        type: 'required',
+      },
+      {
+        type: 'name',
+        message: 'El apellido es obligatorio',
       },
     ],
     email: [
@@ -62,7 +70,6 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, 
-    private storageService: StorageService,
     private alertController: AlertController, 
     private registerService : RegisterService,
     private navCtrl: NavController
@@ -72,7 +79,13 @@ export class RegisterPage implements OnInit {
         '',
         Validators.compose([
           Validators.required, //Campo obligatorio
-          this.nameWithSurnameValidator(), //Valida Nombre + Apellido
+          //this.nameWithSurnameValidator(),
+        ])
+      ),
+      last_name: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required, //Campo obligatorio
         ])
       ),
       email: new FormControl(
@@ -114,30 +127,11 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() { }
 
-  //Funcion para validar el nombre + apellido para completar el registro en campo nombre
-  nameWithSurnameValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value || '';
-      const parts = value.trim().split(' ');
-
-      if (parts.length < 2) {
-        return { nameWithSurname: true };
-      }
-
-      return null;
-    };
-  }
 
   //Validar y registrar usuarios
-  registerUser(credentials: any) {
-    this.registerService.serviceRegisterUser(credentials).then(respuesta  =>{
-      this.presentAlert(this.confirmacion = true);
-      this.errorMessage ="";
-      this.redirigirLogin();
-    }).catch(error => {
-      this.errorMessage = error;
-      this.presentAlert(this.confirmacion);
-    })
+  async registerUser(credentials: any) {
+    console.log(credentials);
+    this.registerService.serviceRegisterUser(credentials)
   }
 
   redirigirLogin(){

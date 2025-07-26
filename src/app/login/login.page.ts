@@ -66,10 +66,34 @@ export class LoginPage implements OnInit {
 
   loginUser(credentials: any) {
     console.log(credentials);
-    this.authService.loginUserAuth(credentials)
+    this.authService.login(credentials).then(response => {
+        if (response.status === "OK") {
+          const data = (response as { status: "OK"; data: any }).data;
+          this.presentAlert(true, "Bienvenido " + data.user.name);
+          this.redirigirHome()
+      } else {
+        this.presentAlert(false, response.msg);
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+
+  }
+
+  async presentAlert(confirmacion: boolean, mensaje: string = '') {
+    const confirma = await this.alertController.create({
+      header: confirmacion ? 'Login Correcto' : 'Error de inicio de sesión',
+      message: mensaje || (confirmacion ? '¡Usuario ingresó exitosamente!' : '¡Credenciales incorrectas!'),
+      buttons: ['Ok'],
+    });
+    await confirma.present();
   }
   
   redirigirRegister() {
     this.navCtrl.navigateForward('/register');
+  }
+
+   redirigirHome() {
+    this.navCtrl.navigateForward('/home');
   }
 }

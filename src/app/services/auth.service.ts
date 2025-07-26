@@ -20,16 +20,8 @@ export class AuthService {
     private musicService: MusicService
   ) { }
 
-  async presentAlert(confirmacion: boolean, mensaje: string = '') {
-    const confirma = await this.alertController.create({
-      header: confirmacion ? 'Login Correcto' : 'Error de inicio de sesión',
-      message: mensaje  || (confirmacion ? '¡Usuario ingresó exitosamente!' : '¡Credenciales incorrectas!'),
-      buttons: ['Ok'],
-    });
-    await confirma.present();
-  }
 
-  async loginUserAuth(credentials: any) {
+  /*async loginUserAuth(credentials: any) {
     this.response = await this.login(credentials);
 
     if (this.response.status === "OK") {
@@ -38,9 +30,48 @@ export class AuthService {
     } else {
       this.presentAlert(false, this.response.msg);
     }
+  }*/
+
+  login(credenciales: any) {
+    const body = {
+      user: {
+        email: credenciales.email,
+        password: credenciales.password
+      }
+    };
+
+    return fetch(`${this.urlServer}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(async response => {
+        const responseBody = await response.json().catch(() => null);
+        if (!response.ok) {         
+          return {
+            status: "ERROR",
+            code: response.status,
+            msg: "Credenciales incorrectas"
+          };
+        }
+
+        return {
+          status: "OK",
+          data: responseBody
+        };
+      })
+      .catch(error => {
+        console.log(error, "error authservice")
+        return {
+          status: "ERROR",
+          msg: "No se pudo conectar al servidor"
+        };
+      });
   }
 
-  userId(){
+  userId() {
     return this.response.user.id;
   }
 
@@ -50,34 +81,4 @@ export class AuthService {
     this.navCtrl.navigateForward('/home');
   }
 
-  async login(credenciales: any) {
-    const body = {
-      user: {
-        email: credenciales.email,
-        password: credenciales.password
-      }
-    };
-
-    try {
-      const response = await fetch(`${this.urlServer}/login`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body) // 👈 FORMATO EXACTO
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        console.error("Error HTTP:", response.status, data);
-        return { status: "ERROR", msg: data.msg || "Credenciales inválidas" };
-      }
-
-      return data; // Esto tendrá el "msg", "user", y "status"
-    } catch (error) {
-      console.error("Error de red o fetch:", error);
-      return { status: "ERROR", msg: "No se pudo conectar al servidor" };
-    }
-  }
 }
