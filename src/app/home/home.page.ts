@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
   song: any = {
     name: '',
     preview_url: '',
-    playing: false
+    playing: false,
   };
   currentSong: any;
   newTime: any;
@@ -33,7 +33,8 @@ export class HomePage implements OnInit {
   favorites: any;
   selectSong: number = 0;
 
-  onToggleChange(event: any) { //Escucha el cambio del toggle
+  onToggleChange(event: any) {
+    //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
     this.cambiarTema(this.isToggled); //llama a la funcion para cambiar el tema
   }
@@ -51,14 +52,16 @@ export class HomePage implements OnInit {
     {
       title: 'Popular',
       subtitle: '(para todos)',
-      image: 'https://cdn.pixabay.com/photo/2017/11/12/16/41/musician-2943109_1280.jpg',
+      image:
+        'https://cdn.pixabay.com/photo/2017/11/12/16/41/musician-2943109_1280.jpg',
       description:
         'Es la música que canta todo el mundo. Suena en la radio, en las fiestas y hasta en la calle. Es pegajosa, simple y fácil de recordar',
     },
     {
       title: 'Folclórico',
       subtitle: '(tus raíces)',
-      image: 'https://cdn.pixabay.com/photo/2020/03/09/04/34/folklore-4914425_1280.jpg',
+      image:
+        'https://cdn.pixabay.com/photo/2020/03/09/04/34/folklore-4914425_1280.jpg',
       description:
         'Es música que te conecta con las raíces. Es como un abrazo sonoro de tu tierra. Cada ritmo, cada instrumento y cada letra tiene algo de historia adentro.',
     },
@@ -77,7 +80,7 @@ export class HomePage implements OnInit {
         'https://cdn.pixabay.com/photo/2022/07/04/04/37/musician-7300353_1280.jpg',
       description:
         'Sonidos digitales y bajos que hacen vibrar el cuerpo. Perfecta para bailar, descontrolarse o simplemente dejarse llevar por el ritmo artificial y moderno.',
-    }
+    },
   ];
 
   constructor(
@@ -88,8 +91,7 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private authService: AuthService,
     private favoritesService: FavoritesService
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     this.loadAlbums();
@@ -100,28 +102,27 @@ export class HomePage implements OnInit {
   }
 
   loadTracks() {
-    this.musicService.getTracks().then(tracks => {
+    this.musicService.getTracks().then((tracks) => {
       this.tracks = tracks;
-    })
+    });
   }
 
   loadAlbums() {
-    this.musicService.getAlbums().then(albums => {
+    this.musicService.getAlbums().then((albums) => {
       this.albums = albums;
-    })
+    });
   }
 
   loadArtists() {
-    this.musicService.getArtists().then(artists => {
+    this.musicService.getArtists().then((artists) => {
       this.artists = artists;
-    })
+    });
   }
 
-  loadFavorite() {
-    this.favoritesService.getFavorite().then(favorites => {
+  async loadFavorite() {
+    this.favoritesService.getFavorite().then((favorites) => {
       this.favorites = favorites;
-    })
-    // Verificar si ya es favorita
+    });
   }
 
   async ionViewWillEnter() {
@@ -163,73 +164,59 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/intro');
   }
 
-  exit() { // Cerrar sesion corregir la salida
+  exit() {
+    // Cerrar sesion corregir la salida
     this.storageService.set('login', false);
     console.log('Cerrando sesion');
     this.navCtl.navigateBack('/login');
   }
 
   async showSongs(albumId: string) {
-    console.log("album id: ", albumId)
+    console.log('album id: ', albumId);
     const songs = await this.musicService.getSongsByAlbum(albumId);
-    console.log("songs: ", songs)
+    console.log('songs: ', songs);
     const modal = await this.modalCtrl.create({
       component: SongsModalPage,
       componentProps: {
-        songs: songs
-      }
+        songs: songs,
+      },
     });
     modal.onDidDismiss().then((result) => {
       if (result.data) {
         this.song = result.data;
         this.selectSong = result.data.id;
+        this.updateLikedStatus();
       }
-    })
+    });
     modal.present();
   }
 
   async showSongsByArtists(artistId: string) {
-    console.log("artista id: ", artistId)
+    console.log('artista id: ', artistId);
     const songs = await this.musicService.getSongsByArtists(artistId);
     const modal = await this.modalCtrl.create({
       component: SongsModalPage,
       componentProps: {
-        songs: songs
-      }
+        songs: songs,
+      },
     });
     modal.onDidDismiss().then((result) => {
       if (result.data) {
-        console.log("cancion recibida ", result.data);
+        console.log('cancion recibida ', result.data);
         this.song = result.data;
         this.selectSong = result.data.id;
-      }
-    })
-    modal.present();
-  }
-
-  /*async showFavorites(favorite: string) {
-    const songs = await this.favoritesService.getFavorite(favorite);
-    const modal = await this.modalCtrl.create({
-      component: SongsModalPage,
-      componentProps: {
-        songs: songs
+        this.updateLikedStatus();
       }
     });
-    modal.onDidDismiss().then((result) => {
-      if(result.data){
-        this.song = result.data;
-        console.log("Estas son las canciones? ", this.song)
-      }
-    })
     modal.present();
-  }*/
+  }
 
   play() {
     this.currentSong = new Audio(this.song.preview_url);
     this.currentSong.play();
-    this.currentSong.addEventListener("timeupdate", () => {
+    this.currentSong.addEventListener('timeupdate', () => {
       this.newTime = this.currentSong.currentTime / this.currentSong.duration;
-    })
+    });
     this.song.playing = true;
   }
 
@@ -239,36 +226,38 @@ export class HomePage implements OnInit {
   }
 
   formatTime(seconds: number) {
-    if (!seconds || isNaN(seconds)) return "0:00";
+    if (!seconds || isNaN(seconds)) return '0:00';
     const minutes = Math.floor(seconds / 60);
     const remaningSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${remaningSeconds.toString().padStart(2, '0')}`
+    return `${minutes}:${remaningSeconds.toString().padStart(2, '0')}`;
   }
 
   //Animacion del like
   async toggleLike() {
-    this.liked = !this.liked
     if (this.selectSong === 0) {
       console.log('Seleccione una canción primero');
       return;
-    }
-    this.liked = this.favorites.some((song:any) => song.id === this.selectSong);
-    
-    if(!this.liked){
-      this.liked = !this.liked;
-      console.log("La cancion no se encuentra en favoritos, envia a la API peticion para crearla")
-    }else{
-      console.log("La cancion se encuentra en favoritos, envia a la API peticion para quitarla")
-    }
-
-    /*if (this.liked && !alreadyFavorite) {
-      console.log('Canción marcada como favorita');
-      // Aquí iría tu llamada POST para agregar
-    } else if (!this.liked && alreadyFavorite) {
-      console.log('Favorito removido');
-      // Aquí iría tu llamada DELETE para eliminar
     } else {
-      console.log('No se realizó ninguna acción (posible duplicado o estado sin cambios)');
-    }*/
+      if (!this.liked) {
+        this.liked = !this.liked;
+        this.favoritesService.addFavorite(this.authService.userId(), this.selectSong).then(res => {
+          if (res.status === "OK") {
+            console.log("La cancion se marcó como favorita");
+          }
+        })
+      } else {
+        this.liked = !this.liked;
+        console.log('envia a la API peticion para quitarla como favorito');
+      }
+    }
+  }
+
+  updateLikedStatus() {
+    console.log('entre en updateLikedStatus');
+    if (this.favorites && Array.isArray(this.favorites)) {
+      this.liked = this.favorites.some((song) => song.id === this.selectSong);
+    } else {
+      this.liked = false;
+    }
   }
 }

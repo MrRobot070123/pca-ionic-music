@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 export class FavoritesService {
 
   urlServer = "https://music.fly.dev";
+  responseBody: any
 
   constructor(private authService : AuthService) { }
 
@@ -29,7 +30,7 @@ export class FavoritesService {
 
       console.log("ID USUARIO: " ,idUser, " ID CANCION: " , idCancion);
 
-      /*return fetch(`${this.urlServer}/login`, {
+      return fetch(`${this.urlServer}/favorite_tracks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -37,28 +38,28 @@ export class FavoritesService {
         body: JSON.stringify(body)
       })
         .then(async response => {
-          const responseBody = await response.json().catch(() => null);
+          this.responseBody = await response.json().catch(() => null);
           if (!response.ok) {         
             return {
               status: "ERROR",
               code: response.status,
-              msg: "Credenciales incorrectas"
+              msg: "Fallo al marcar como favorita"
             };
 
           }
 
           return {
             status: "OK",
-            data: responseBody
+            data: this.responseBody
           };
         })
         .catch(error => {
-          console.log(error, "error authservice")
+          console.log(error, "error favoriteservice")
           return {
             status: "ERROR",
             msg: "No se pudo conectar al servidor"
           };
-        });*/
+        });
     }
 
   //Elimina favoritos
