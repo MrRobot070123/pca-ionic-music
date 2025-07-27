@@ -1,4 +1,4 @@
-<ion-content class="login-background" fullscreen [scrollY]="false">
+<ion-content class="login-background">
   <div class="login-container">
     <div class="login-card">
       <figure class="profile-default-image ion-text-center">
@@ -8,7 +8,7 @@
       <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
         <ion-item class="input-item">
           <ion-icon slot="start" name="person-outline"></ion-icon>
-          <ion-input label="Email" labelPlacement="stacked" placeholder="Escribe tu email"
+          <ion-input id="login-email" label="Email" labelPlacement="stacked" placeholder="Escribe tu email"
             formControlName="email"></ion-input>
         </ion-item>
         <div class="mensaje-error-central">
@@ -22,7 +22,7 @@
         </div>
         <ion-item class="input-item">
           <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-          <ion-input label="Contraseña" labelPlacement="stacked" placeholder="Tu contraseña" type="password"
+          <ion-input id="login-password" label="Contraseña" labelPlacement="stacked" placeholder="Tu contraseña" type="password"
             formControlName="password"></ion-input>
         </ion-item>
         <div class="mensaje-error-central">

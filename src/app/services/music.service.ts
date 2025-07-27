@@ -40,10 +40,4 @@ export class MusicService {
     
   }
 
-  getFavorite(userId: String){
-    console.log(userId)
-    return fetch(`${this.urlServer}/user_favorites/${userId}`).then(
-      response => response.json()
-    )
-  }
 }

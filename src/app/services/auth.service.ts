@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { NavController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular/standalone';
-import { MusicService } from './music.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +12,7 @@ export class AuthService {
 
   constructor(
     private storageService: StorageService,
-    private alertController: AlertController,
     private navCtrl: NavController,
-    private musicService: MusicService
   ) { }
 
   async login(credenciales: any) {

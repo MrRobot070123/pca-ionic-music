@@ -16,16 +16,6 @@ export class StorageService {
     this._storage = storage;
   }
 
-  // Guarda los usuarios
-  async setUsers(users: any[]){
-    await this._storage?.set('usuarios', users);
-  }
-
-  // Obtiene los usuarios
-  async getUsers(): Promise<any[]> {
-    return (await this._storage?.get('usuarios')) || [];
-  }
-
   private async ready (){
     if (!this._storage){
       await this.init();

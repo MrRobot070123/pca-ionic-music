@@ -8,6 +8,7 @@ import { IonicModule, NavController, ModalController } from '@ionic/angular';
 import { MusicService } from '../services/music.service';
 import { SongsModalPage } from '../songs-modal/songs-modal.page';
 import { AuthService } from '../services/auth.service';
+import { FavoritesService } from '../services/favorites.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomePage implements OnInit {
   tracks: any;
   albums: any;
   artists: any;
-  song: any={
+  song: any = {
     name: '',
     preview_url: '',
     playing: false
@@ -30,6 +31,7 @@ export class HomePage implements OnInit {
   newTime: any;
   liked: boolean = false;
   favorites: any;
+  selectSong: number = 0;
 
   onToggleChange(event: any) { //Escucha el cambio del toggle
     this.isToggled = event.detail.checked; //actualiza el valor de isToggled
@@ -84,7 +86,8 @@ export class HomePage implements OnInit {
     private navCtl: NavController,
     private musicService: MusicService,
     private modalCtrl: ModalController,
-    private authService: AuthService
+    private authService: AuthService,
+    private favoritesService: FavoritesService
   ) {
   }
 
@@ -115,9 +118,10 @@ export class HomePage implements OnInit {
   }
 
   loadFavorite() {
-    this.musicService.getFavorite(this.authService.userId()).then(favorite => {
-      this.favorites = favorite;
+    this.favoritesService.getFavorite().then(favorites => {
+      this.favorites = favorites;
     })
+    // Verificar si ya es favorita
   }
 
   async ionViewWillEnter() {
@@ -176,8 +180,9 @@ export class HomePage implements OnInit {
       }
     });
     modal.onDidDismiss().then((result) => {
-      if(result.data){
+      if (result.data) {
         this.song = result.data;
+        this.selectSong = result.data.id;
       }
     })
     modal.present();
@@ -193,16 +198,17 @@ export class HomePage implements OnInit {
       }
     });
     modal.onDidDismiss().then((result) => {
-      if(result.data){
+      if (result.data) {
         console.log("cancion recibida ", result.data);
         this.song = result.data;
+        this.selectSong = result.data.id;
       }
     })
     modal.present();
   }
 
-  async showFavorites(favorite: string) {
-    const songs = await this.musicService.getFavorite(favorite);
+  /*async showFavorites(favorite: string) {
+    const songs = await this.favoritesService.getFavorite(favorite);
     const modal = await this.modalCtrl.create({
       component: SongsModalPage,
       componentProps: {
@@ -212,40 +218,57 @@ export class HomePage implements OnInit {
     modal.onDidDismiss().then((result) => {
       if(result.data){
         this.song = result.data;
+        console.log("Estas son las canciones? ", this.song)
       }
     })
     modal.present();
-  }
+  }*/
 
-  play(){
+  play() {
     this.currentSong = new Audio(this.song.preview_url);
     this.currentSong.play();
-    this.currentSong.addEventListener("timeupdate", ()=>{
+    this.currentSong.addEventListener("timeupdate", () => {
       this.newTime = this.currentSong.currentTime / this.currentSong.duration;
     })
     this.song.playing = true;
   }
 
-  pausa(){
+  pausa() {
     this.currentSong.pause();
     this.song.playing = false;
   }
 
-  formatTime(seconds: number){
-    if(!seconds || isNaN(seconds)) return "0:00";
-    const minutes = Math.floor(seconds/60);
+  formatTime(seconds: number) {
+    if (!seconds || isNaN(seconds)) return "0:00";
+    const minutes = Math.floor(seconds / 60);
     const remaningSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remaningSeconds.toString().padStart(2, '0')}`
   }
 
   //Animacion del like
-  toggleLike(){
-  this.liked = !this.liked;
-  if (this.liked) {
-    console.log('Canción marcada como favorita');
-    } else {
-      console.log('Favorito removido');
+  async toggleLike() {
+    this.liked = !this.liked
+    if (this.selectSong === 0) {
+      console.log('Seleccione una canción primero');
+      return;
     }
-  }
+    this.liked = this.favorites.some((song:any) => song.id === this.selectSong);
+    
+    if(!this.liked){
+      this.liked = !this.liked;
+      console.log("La cancion no se encuentra en favoritos, envia a la API peticion para crearla")
+    }else{
+      console.log("La cancion se encuentra en favoritos, envia a la API peticion para quitarla")
+    }
 
+    /*if (this.liked && !alreadyFavorite) {
+      console.log('Canción marcada como favorita');
+      // Aquí iría tu llamada POST para agregar
+    } else if (!this.liked && alreadyFavorite) {
+      console.log('Favorito removido');
+      // Aquí iría tu llamada DELETE para eliminar
+    } else {
+      console.log('No se realizó ninguna acción (posible duplicado o estado sin cambios)');
+    }*/
+  }
 }

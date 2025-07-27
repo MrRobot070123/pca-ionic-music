@@ -85,7 +85,7 @@
       <div class="album-slider-wrapper">
         <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
           style="width: 90%; height: auto;">
-          <swiper-slide *ngFor="let favorite of favorites" (click)="showFavorites(favorite.id)">
+          <swiper-slide *ngFor="let favorite of favorites">
             <div class="slider-content">
               <!--Colocar img por defecto-->
               <p>{{ favorite.name }}</p>
@@ -106,10 +106,11 @@
       </div>
       <div class="footer-controls">
         <ion-icon 
-          [name]="liked ? 'heart' : 'heart-outline'" 
+          [name]="liked ? 'heart' : 'heart-outline'"
           [color]="liked ? 'danger' : ''"
           class="footer-icon heart-icon"
-          (click)="toggleLike()">
+          (click)="toggleLike()"
+          >
         </ion-icon>
         <ion-text class="footer-song-name">
           {{song.name || "N/A"}}
