@@ -6,6 +6,7 @@
         <img src="assets/img/Logo_register.png" alt="" />
       </figure>
       <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+
         <ion-item class="input-item">
           <ion-icon slot="start" name="person-outline"></ion-icon>
           <ion-input id="login-email" label="Email" labelPlacement="stacked" placeholder="Escribe tu email"
@@ -20,6 +21,7 @@
             </div>
           </ng-container>
         </div>
+
         <ion-item class="input-item">
           <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
           <ion-input id="login-password" label="Contraseña" labelPlacement="stacked" placeholder="Tu contraseña" type="password"
@@ -34,6 +36,7 @@
             </div>
           </ng-container>
         </div>
+        
         <ion-button expand="block" type="submit" class="login-button" [disabled]="!loginForm.valid">
           Iniciar sesión
         </ion-button>

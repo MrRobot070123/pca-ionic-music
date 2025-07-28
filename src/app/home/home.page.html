@@ -34,13 +34,14 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
+      
       <div>
         <h2>Géneros Músicales</h2>
       </div>
       <swiper-container effect="coverflow" pagination="true" slides-per-view="1" style="width: 90%; height: auto">
         <swiper-slide *ngFor="let genre of genres">
           <ion-card class="card">
-            <img [src]="genre.image" [alt]="genre.title" />
+            <img [src]="genre.image"/>
             <ion-card-header class="slider-content">
               <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
               <ion-card-title>{{ genre.title }}</ion-card-title>
@@ -51,6 +52,7 @@
           </ion-card>
         </swiper-slide>
       </swiper-container>
+
       <div>
         <h2>Albúmes</h2>
       </div>
@@ -59,12 +61,13 @@
           style="width: 90%; height: auto;">
           <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)">
             <div class="slider-content">
-              <img [src]="album.image" />
+              <img [src]="album.image" [alt]="album.title"  />
               <p>{{ album.name }}</p>
             </div>
           </swiper-slide>
         </swiper-container>
       </div>
+
       <div>
         <h2>Artistas</h2>
       </div>
@@ -79,6 +82,7 @@
           </swiper-slide>
         </swiper-container>
       </div>
+
       <div>
         <h2>Favoritos</h2>
       </div>
@@ -88,12 +92,13 @@
           <swiper-slide *ngFor="let favorite of favorites">
             <div class="slider-content">
               <!--Colocar img por defecto-->
-              <p>{{ favorite.name }}</p>
+              <p>{{ favorite.id }}</p>
             </div>
           </swiper-slide>
         </swiper-container>
       </div>
     </ion-content>
+    
     <ion-footer class="music-footer">
       <ion-grid class="time-display">
         <ion-row>

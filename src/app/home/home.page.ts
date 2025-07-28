@@ -32,6 +32,8 @@ export class HomePage implements OnInit {
   liked: boolean = false;
   favorites: any;
   selectSong: number = 0;
+  songID: any;
+  favoriteIdToDelete: number = 0;
 
   onToggleChange(event: any) {
     //Escucha el cambio del toggle
@@ -119,9 +121,10 @@ export class HomePage implements OnInit {
     });
   }
 
-  async loadFavorite() {
+  loadFavorite() {
     this.favoritesService.getFavorite().then((favorites) => {
       this.favorites = favorites;
+      console.log("esta es la respuesta de favoritesServices: ", this.favorites)
     });
   }
 
@@ -185,6 +188,7 @@ export class HomePage implements OnInit {
       if (result.data) {
         this.song = result.data;
         this.selectSong = result.data.id;
+        //this.favoritesService.setSelectTrack(this.selectSong);
         this.updateLikedStatus();
       }
     });
@@ -205,6 +209,7 @@ export class HomePage implements OnInit {
         console.log('cancion recibida ', result.data);
         this.song = result.data;
         this.selectSong = result.data.id;
+        //this.favoritesService.setSelectTrack(this.selectSong);
         this.updateLikedStatus();
       }
     });
@@ -247,17 +252,35 @@ export class HomePage implements OnInit {
         })
       } else {
         this.liked = !this.liked;
-        console.log('envia a la API peticion para quitarla como favorito');
+        this.favoritesService.deleteFavorite(this.favoriteIdToDelete).then(res =>{
+          if(res.status === 'OK'){
+            console.log('la cancion se quitó de los favoritos');
+          }
+        });
       }
     }
   }
 
   updateLikedStatus() {
+  if (this.favorites && Array.isArray(this.favorites)) {
+    const match = this.favorites.find(song => song.track_id === this.selectSong);
+    this.liked = !!match;
+    console.log("El this.liked es: " , this.liked);
+    if (match) {
+      this.favoriteIdToDelete = match.id;  // Aquí se accede SOLO si existe
+      console.log('ID del favorito para eliminar:', this.favoriteIdToDelete);
+    }
+  }
+}
+
+  /*updateLikedStatus() {
     console.log('entre en updateLikedStatus');
     if (this.favorites && Array.isArray(this.favorites)) {
-      this.liked = this.favorites.some((song) => song.id === this.selectSong);
+      console.log(Array.isArray(this.favorites))
+      this.liked = this.favorites.some((song) => song.track_id === this.selectSong);
+      console.log("El liked es: " , this.liked)
     } else {
       this.liked = false;
     }
-  }
+  }*/
 }
