@@ -34,6 +34,7 @@ export class HomePage implements OnInit {
   selectSong: number = 0;
   songID: any;
   favoriteIdToDelete: number = 0;
+  userID: any;
 
   onToggleChange(event: any) {
     //Escucha el cambio del toggle
@@ -96,6 +97,7 @@ export class HomePage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.userID = await this.storageService.get('user');
     this.loadAlbums();
     this.loadArtists();
     this.loadTracks();
@@ -122,7 +124,7 @@ export class HomePage implements OnInit {
   }
 
   loadFavorite() {
-    this.favoritesService.getFavorite().then((favorites) => {
+    this.favoritesService.getFavorite(this.userID).then((favorites) => {
       this.favorites = favorites;
       console.log("esta es la respuesta de favoritesServices: ", this.favorites)
     });
@@ -245,7 +247,7 @@ export class HomePage implements OnInit {
     } else {
       if (!this.liked) {
         this.liked = !this.liked;
-        this.favoritesService.addFavorite(this.authService.userId(), this.selectSong).then(res => {
+        this.favoritesService.addFavorite(await this.userID, this.selectSong).then(res => {
           if (res.status === "OK") {
             console.log("La cancion se marcó como favorita");
           }
@@ -272,15 +274,4 @@ export class HomePage implements OnInit {
     }
   }
 }
-
-  /*updateLikedStatus() {
-    console.log('entre en updateLikedStatus');
-    if (this.favorites && Array.isArray(this.favorites)) {
-      console.log(Array.isArray(this.favorites))
-      this.liked = this.favorites.some((song) => song.track_id === this.selectSong);
-      console.log("El liked es: " , this.liked)
-    } else {
-      this.liked = false;
-    }
-  }*/
 }

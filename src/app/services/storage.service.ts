@@ -6,6 +6,7 @@ import { Storage} from '@ionic/storage-angular';
 })
 export class StorageService {
   private _storage: Storage | null = null;
+  private _user: number = 0;
 
   constructor( private storage: Storage) { 
     this.init();
@@ -32,6 +33,17 @@ export class StorageService {
   public async get(key: string){
     await this.ready();
     return this._storage?.get(key);
+  }
+
+  public async setUser(user: number){ 
+    await this.ready();
+    return this._user = user
+  }
+
+  // obtener un valor del storage
+  public async getUser(){
+    await this.ready();
+    return this._user
   }
 
   // Eliminar un valor del storage

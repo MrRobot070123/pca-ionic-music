@@ -17,6 +17,7 @@ export class LoginPage implements OnInit {
   confirmacion = false;
   loginForm: FormGroup;
   errorMessage: String = "";
+  user: number = 0;
 
   validation_messages = {
     email: [
@@ -75,6 +76,7 @@ export class LoginPage implements OnInit {
         if (response.status === "OK") {
           const data = (response as { status: "OK"; data: any }).data;
           this.presentAlert(true, "Bienvenido " + data.user.name);
+          this.user = data.user.id
           this.redirigirHome()
       } else {
         this.presentAlert(false, response.msg);
@@ -100,6 +102,7 @@ export class LoginPage implements OnInit {
 
   async redirigirHome() {
     await this.storageService.set('login', true);
+    await this.storageService.set('user',this.user);
     this.navCtrl.navigateForward('/home');
   }
 }

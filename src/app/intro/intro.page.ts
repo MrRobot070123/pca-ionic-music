@@ -59,8 +59,8 @@ export class IntroPage {
   
   async goHome() {  
     const login = await this.storageService.get('login');
-    console.log("Login es: " ,login)
-    if(login){
+    const usuario = await this.storageService.get('user');
+    if(login && usuario != 0){
       await this.storageService.set('fromIntro', true); // marcador de navegación
       this.router.navigateByUrl('/home');
     }else{

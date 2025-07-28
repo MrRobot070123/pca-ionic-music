@@ -9,6 +9,7 @@ export class AuthService {
 
   urlServer = "https://music.fly.dev";
   responseBody: any;
+  user: any;
 
   constructor(
     private storageService: StorageService,
@@ -55,13 +56,10 @@ export class AuthService {
       });
   }
 
-  userId() {
-    return this.responseBody.user.id;
-  }
-
-  async goHome() {
+  /*async goHome() {
     await this.storageService.set('login', true); // marcador de navegación
+    await this.storageService.setUser(this.userId())
     this.navCtrl.navigateForward('/home');
-  }
+  }*/
 
 }

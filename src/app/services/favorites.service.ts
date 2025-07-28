@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,16 +11,7 @@ export class FavoritesService {
   selectTrack: any;
   allFavorites: any;
 
-  constructor(private authService: AuthService) {}
-
-  /* Anterior
-  async getFavorite(){
-    const userId = this.authService.userId();
-    return fetch(`${this.urlServer}/user_favorites/${userId}`).then(
-      response => response.json()
-    )
-  }
-  */
+  constructor(private authService: AuthService, private storageService: StorageService) {}
 
   //Obtiene la cancion actual
   setSelectTrack(track: number) {
@@ -27,9 +19,8 @@ export class FavoritesService {
   }
 
   //Obtiene canciones
-  async getFavorite() {
-    const userID = this.authService.userId();
-    console.log('Entre a getFavorite');
+  async getFavorite(userID : any) {
+    console.log('Entre a getFavorite el valor el usuario es: ', userID);
     await this.getAllFavorites().then((response) => {
       this.allFavorites = response;
     });

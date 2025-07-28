@@ -4,8 +4,8 @@ import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage), canActivate: [IntroGuard, loginGuard]
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then((m) => m.LoginPage)
   },
   {
     path: '',
@@ -17,8 +17,8 @@ export const routes: Routes = [
     loadComponent: () => import('./intro/intro.page').then( m => m.IntroPage),
   },
   {
-    path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then( m => m.HomePage), canActivate: [IntroGuard, loginGuard]
   },
   {
     path: 'register',
