@@ -35,7 +35,7 @@ export class HomePage implements OnInit {
   songID: any;
   favoriteIdToDelete: number = 0;
   userID: any;
-  isToastOpen = false;
+  isClick = false;
 
   onToggleChange(event: any) {
     //Escucha el cambio del toggle
@@ -94,7 +94,7 @@ export class HomePage implements OnInit {
     private musicService: MusicService,
     private modalCtrl: ModalController,
     private favoritesService: FavoritesService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.userID = await this.storageService.get('user');
@@ -254,45 +254,45 @@ export class HomePage implements OnInit {
   }
 
   //Animacion del like
-  async toggleLike(isOpen: boolean) {
-    this.isToastOpen = isOpen;
-    if (this.selectSong === 0) {
-      //this.isToastOpen = false;
-      console.log('Seleccione una canción primero');
-      return;
-    } else {
-      if (!this.liked) {
-        this.liked = !this.liked;
-        this.favoritesService.addFavorite(await this.userID, this.selectSong).then(res => {
-          if (res.status === "OK") {
-            console.log("La cancion se marcó como favorita");
-          }else{
-            console.log(res.msg)
-          }
-          this.loadFavorite(); 
-        })
+  async toggleLike(click: boolean) {
+    if (click) {
+      this.isClick = click;
+      if (this.selectSong === 0) {
+        console.log('Seleccione una canción primero');
+        return;
       } else {
-        this.liked = !this.liked;
-        this.favoritesService.deleteFavorite(this.favoriteIdToDelete).then(res =>{
-          if(res.status === 'OK'){
-            console.log('la cancion se quitó de los favoritos');
-          }else{
-          console.log(res.msg)
-          }
-          this.loadFavorite();  
-        });
+        if (!this.liked) {
+          this.liked = !this.liked;
+          this.favoritesService.addFavorite(await this.userID, this.selectSong).then(res => {
+            if (res.status === "OK") {
+            } else {
+              console.log(res.msg)
+            }
+            this.loadFavorite();
+          })
+        } else {
+          this.liked = !this.liked;
+          this.favoritesService.deleteFavorite(this.favoriteIdToDelete).then(res => {
+            if (res.status === 'OK') {
+            } else {
+              console.log(res.msg)
+            }
+            this.loadFavorite();
+          });
+        }
       }
+    }else{
+      this.isClick = click;
     }
   }
 
   updateLikedStatus() {
-  if (this.favoritesFilter && Array.isArray(this.favoritesFilter)) {
-    const match = this.favoritesFilter.find(song=> song.track_id === this.selectSong);
-    this.liked = !!match;
-    if (match) {
-      this.favoriteIdToDelete = match.id;  // Aquí se accede SOLO si existe
-      console.log('ID del favorito para eliminar:', this.favoriteIdToDelete);
+    if (this.favoritesFilter && Array.isArray(this.favoritesFilter)) {
+      const match = this.favoritesFilter.find(song => song.track_id === this.selectSong);
+      this.liked = !!match;
+      if (match) {
+        this.favoriteIdToDelete = match.id;  // Aquí se accede SOLO si existe
+      }
     }
   }
-}
 }

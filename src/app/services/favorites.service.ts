@@ -89,8 +89,6 @@ export class FavoritesService {
 
   //Elimina favoritos
   deleteFavorite(trackID: number) {
-    console.log('La cancion a eliminar es: ', trackID);
-
     return fetch(`${this.urlServer}/favorite_tracks/${trackID}`, {
       method: 'DELETE',
     })

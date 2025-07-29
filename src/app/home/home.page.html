@@ -114,13 +114,13 @@
         class="footer-icon heart-icon" (click)="toggleLike(true)">
       </ion-icon>
       <div *ngIf="this.selectSong == 0">
-        <ion-toast [isOpen]="isToastOpen" message="Seleccione una cancion primero" [duration]="3500"></ion-toast>
+        <ion-toast [isOpen]="isClick" message="Seleccione una cancion primero" [duration]="3500" (didDismiss)="toggleLike(false)"></ion-toast>
       </div>
       <div *ngIf="liked === true && this.selectSong !=0">
-        <ion-toast [isOpen]="isToastOpen" message="La canción se agregó a favoritos" [duration]="3500"></ion-toast>
+        <ion-toast [isOpen]="isClick" message="La canción se agregó a favoritos" [duration]="3500" (didDismiss)="toggleLike(false)"></ion-toast>
       </div>
       <div *ngIf="liked === false && this.selectSong !=0">
-        <ion-toast [isOpen]="isToastOpen" message="La canción se quitó de favoritos" [duration]="3500"></ion-toast>
+        <ion-toast [isOpen]="isClick" message="La canción se quitó de favoritos" [duration]="3500" (didDismiss)="toggleLike(false)"></ion-toast>
       </div>
       <ion-text class="footer-song-name">
         {{song.name || "N/A"}}
