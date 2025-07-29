@@ -56,6 +56,18 @@ export class IntroPage {
     const body = document.body;
     body.classList.add('dark-theme-const');
   }
+
+  ionViewDidLeave() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur(); // Desenfoca el elemento activo actual
+    }
+  }
+
+  ngOnDestroy() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
   
   async goHome() {  
     const login = await this.storageService.get('login');

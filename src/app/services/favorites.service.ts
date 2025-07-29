@@ -10,6 +10,7 @@ export class FavoritesService {
   responseBody: any;
   selectTrack: any;
   allFavorites: any;
+  userID: any;
 
   constructor(private authService: AuthService, private storageService: StorageService) {}
 
@@ -18,9 +19,16 @@ export class FavoritesService {
     this.selectTrack = track;
   }
 
+  getFavoritesUser(userID : any){
+    this.userID = userID
+    return fetch(`${this.urlServer}/user_favorites/${this.userID}`).then((response) =>
+      response.json()
+    );
+  }
+
   //Obtiene canciones
   async getFavorite(userID : any) {
-    console.log('Entre a getFavorite el valor el usuario es: ', userID);
+    this.userID = userID
     await this.getAllFavorites().then((response) => {
       this.allFavorites = response;
     });

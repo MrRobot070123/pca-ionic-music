@@ -12,7 +12,6 @@ export class IntroGuard implements CanActivate {
   
   async canActivate(): Promise<boolean> {
     const fromIntro = await this.storageService.get('fromIntro');
-    console.log("El estado de la intro - home es: ", fromIntro);
     if (fromIntro){
       return true; // Permitir el acceso si ya se ha visto la introduccion
     }else{

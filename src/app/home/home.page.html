@@ -1,129 +1,132 @@
-<ion-app>
-  <ion-menu contentId="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Inicio</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-icon aria-hidden="true" name="color-palette" slot="start"></ion-icon>
-          <ion-toggle aria-label="Tertiary toggle" color="tertiary" (ionChange)="onToggleChange($event)"
-            [checked]="isToggled">Color Oscuro</ion-toggle>
-        </ion-item>
-        <ion-item (click)="goBack()">
-          <ion-icon aria-hidden="true" name="home" slot="start"></ion-icon>
-          <ion-label>Volver a la intro</ion-label>  
-        </ion-item>
-        <ion-item (click)="exit()">
-          <ion-icon aria-hidden="true" name="exit" slot="start"></ion-icon>
-          <ion-label>Cerrar sesión</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <div class="ion-page contenido" id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title><img src="/assets/img/Logo_500x250.png" alt="Logo_Ape7ron"
-            style="width: 80%; margin-top: 10px" /></ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      
-      <div>
-        <h2>Géneros Músicales</h2>
-      </div>
-      <swiper-container effect="coverflow" pagination="true" slides-per-view="1" style="width: 90%; height: auto">
-        <swiper-slide *ngFor="let genre of genres">
-          <ion-card class="card">
-            <img [src]="genre.image"/>
-            <ion-card-header class="slider-content">
-              <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
-              <ion-card-title>{{ genre.title }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content class="slider-content p">
-              <p class="reducir">{{genre.description}}</p>
-            </ion-card-content>
-          </ion-card>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Inicio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-icon aria-hidden="true" name="color-palette" slot="start"></ion-icon>
+        <ion-toggle aria-label="Tertiary toggle" color="tertiary" (ionChange)="onToggleChange($event)"
+          [checked]="isToggled">Color Oscuro</ion-toggle>
+      </ion-item>
+      <ion-item (click)="goBack()">
+        <ion-icon aria-hidden="true" name="home" slot="start"></ion-icon>
+        <ion-label>Volver a la intro</ion-label>
+      </ion-item>
+      <ion-item (click)="exit()">
+        <ion-icon aria-hidden="true" name="exit" slot="start"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<div class="ion-page contenido" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title><img src="/assets/img/Logo_500x250.png" alt="Logo_Ape7ron"
+          style="width: 80%; margin-top: 10px" /></ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+
+    <div>
+      <h2>Géneros Músicales</h2>
+    </div>
+    <swiper-container effect="coverflow" pagination="true" slides-per-view="1" style="width: 90%; height: auto">
+      <swiper-slide *ngFor="let genre of genres">
+        <ion-card class="card">
+          <img [src]="genre.image" />
+          <ion-card-header class="slider-content">
+            <ion-card-subtitle class="capitalize">{{ genre.subtitle }}</ion-card-subtitle>
+            <ion-card-title>{{ genre.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="slider-content p">
+            <p class="reducir">{{genre.description}}</p>
+          </ion-card-content>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
+
+    <div>
+      <h2>Albúmes</h2>
+    </div>
+    <div class="album-slider-wrapper">
+      <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
+        style="width: 90%; height: auto;">
+        <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)">
+          <div class="slider-content">
+            <img [src]="album.image" [alt]="album.title" />
+            <p>{{ album.name }}</p>
+          </div>
         </swiper-slide>
       </swiper-container>
+    </div>
 
-      <div>
-        <h2>Albúmes</h2>
-      </div>
-      <div class="album-slider-wrapper">
-        <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
-          style="width: 90%; height: auto;">
-          <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)">
-            <div class="slider-content">
-              <img [src]="album.image" [alt]="album.title"  />
-              <p>{{ album.name }}</p>
-            </div>
-          </swiper-slide>
-        </swiper-container>
-      </div>
+    <div>
+      <h2>Artistas</h2>
+    </div>
+    <div class="album-slider-wrapper">
+      <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
+        style="width: 90%; height: auto;">
+        <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtists(artist.id)">
+          <div class="slider-content">
+            <img [src]="artist.image" />
+            <p>{{ artist.name }}</p>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
 
-      <div>
-        <h2>Artistas</h2>
-      </div>
-      <div class="album-slider-wrapper">
-        <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
-          style="width: 90%; height: auto;">
-          <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtists(artist.id)">
-            <div class="slider-content">
-              <img [src]="artist.image" />
-              <p>{{ artist.name }}</p>
-            </div>
-          </swiper-slide>
-        </swiper-container>
-      </div>
+    <div>
+      <h2>Favoritos</h2>
+    </div>
+    <div class="album-slider-wrapper">
+      <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
+        style="width: 90%; height: auto;">
+        <swiper-slide *ngFor="let favorite of favoritesUser" (click)="showSongsFavorite()">
+          <div class="slider-content">
+            <img src="/assets/img/favorite.png" />
+            <!--Colocar img por defecto-->
+            <p style="text-align: start;">{{ favorite.name }}</p>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </ion-content>
 
-      <div>
-        <h2>Favoritos</h2>
+  <ion-footer class="music-footer">
+    <ion-grid class="time-display">
+      <ion-row>
+        <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime) || "0:00"}}</ion-col>
+        <ion-col class="ion-text-end">{{formatTime(currentSong?.duration) || "0:00"}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="footer-controls">
+      <ion-progress-bar class="player-progress-bar" [value]="newTime"></ion-progress-bar>
+    </div>
+    <div class="footer-controls">
+      <ion-icon [name]="liked ? 'heart' : 'heart-outline'" [color]="liked ? 'danger' : ''"
+        class="footer-icon heart-icon" (click)="toggleLike(true)">
+      </ion-icon>
+      <div *ngIf="this.selectSong == 0">
+        <ion-toast [isOpen]="isToastOpen" message="Seleccione una cancion primero" [duration]="3500"></ion-toast>
       </div>
-      <div class="album-slider-wrapper">
-        <swiper-container [slidesPerView]="3" [spaceBetween]="10" autoplay="true" pagination="true"
-          style="width: 90%; height: auto;">
-          <swiper-slide *ngFor="let favorite of favorites">
-            <div class="slider-content">
-              <!--Colocar img por defecto-->
-              <p>{{ favorite.id }}</p>
-            </div>
-          </swiper-slide>
-        </swiper-container>
+      <div *ngIf="liked === true && this.selectSong !=0">
+        <ion-toast [isOpen]="isToastOpen" message="La canción se agregó a favoritos" [duration]="3500"></ion-toast>
       </div>
-    </ion-content>
-    
-    <ion-footer class="music-footer">
-      <ion-grid class="time-display">
-        <ion-row>
-          <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime) || "0:00"}}</ion-col>
-          <ion-col class="ion-text-end">{{formatTime(currentSong?.duration) || "0:00"}}</ion-col>
-        </ion-row>
-      </ion-grid>
-      <div class="footer-controls">
-        <ion-progress-bar class="player-progress-bar" [value]="newTime"></ion-progress-bar>
+      <div *ngIf="liked === false && this.selectSong !=0">
+        <ion-toast [isOpen]="isToastOpen" message="La canción se quitó de favoritos" [duration]="3500"></ion-toast>
       </div>
-      <div class="footer-controls">
-        <ion-icon 
-          [name]="liked ? 'heart' : 'heart-outline'"
-          [color]="liked ? 'danger' : ''"
-          class="footer-icon heart-icon"
-          (click)="toggleLike()"
-          >
-        </ion-icon>
-        <ion-text class="footer-song-name">
-          {{song.name || "N/A"}}
-        </ion-text>
-        <ion-icon [name]="song.playing ? 'pause' : 'play'" class="footer-icon"
-          (click)="song.playing ? pausa() : play()">
-        </ion-icon>
-      </div>
-    </ion-footer>
-  </div>
-</ion-app>
+      <ion-text class="footer-song-name">
+        {{song.name || "N/A"}}
+      </ion-text>
+      <ion-icon [name]="song.playing ? 'pause' : 'play'" class="footer-icon" (click)="song.playing ? pausa() : play()">
+      </ion-icon>
+    </div>
+  </ion-footer>
+</div>

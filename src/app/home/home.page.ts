@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { IonicModule, NavController, ModalController } from '@ionic/angular';
 import { MusicService } from '../services/music.service';
 import { SongsModalPage } from '../songs-modal/songs-modal.page';
-import { AuthService } from '../services/auth.service';
 import { FavoritesService } from '../services/favorites.service';
 
 @Component({
@@ -30,11 +29,13 @@ export class HomePage implements OnInit {
   currentSong: any;
   newTime: any;
   liked: boolean = false;
-  favorites: any;
+  favoritesUser: any;
+  favoritesFilter: any;
   selectSong: number = 0;
   songID: any;
   favoriteIdToDelete: number = 0;
   userID: any;
+  isToastOpen = false;
 
   onToggleChange(event: any) {
     //Escucha el cambio del toggle
@@ -92,7 +93,6 @@ export class HomePage implements OnInit {
     private navCtl: NavController,
     private musicService: MusicService,
     private modalCtrl: ModalController,
-    private authService: AuthService,
     private favoritesService: FavoritesService
   ) {}
 
@@ -100,7 +100,6 @@ export class HomePage implements OnInit {
     this.userID = await this.storageService.get('user');
     this.loadAlbums();
     this.loadArtists();
-    this.loadTracks();
     this.loadFavorite();
     await this.loadStoargeData();
   }
@@ -125,8 +124,10 @@ export class HomePage implements OnInit {
 
   loadFavorite() {
     this.favoritesService.getFavorite(this.userID).then((favorites) => {
-      this.favorites = favorites;
-      console.log("esta es la respuesta de favoritesServices: ", this.favorites)
+      this.favoritesFilter = favorites;
+    });
+    this.favoritesService.getFavoritesUser(this.userID).then((favorites) => {
+      this.favoritesUser = favorites;
     });
   }
 
@@ -177,7 +178,6 @@ export class HomePage implements OnInit {
   }
 
   async showSongs(albumId: string) {
-    console.log('album id: ', albumId);
     const songs = await this.musicService.getSongsByAlbum(albumId);
     console.log('songs: ', songs);
     const modal = await this.modalCtrl.create({
@@ -190,7 +190,6 @@ export class HomePage implements OnInit {
       if (result.data) {
         this.song = result.data;
         this.selectSong = result.data.id;
-        //this.favoritesService.setSelectTrack(this.selectSong);
         this.updateLikedStatus();
       }
     });
@@ -198,7 +197,6 @@ export class HomePage implements OnInit {
   }
 
   async showSongsByArtists(artistId: string) {
-    console.log('artista id: ', artistId);
     const songs = await this.musicService.getSongsByArtists(artistId);
     const modal = await this.modalCtrl.create({
       component: SongsModalPage,
@@ -208,14 +206,30 @@ export class HomePage implements OnInit {
     });
     modal.onDidDismiss().then((result) => {
       if (result.data) {
-        console.log('cancion recibida ', result.data);
         this.song = result.data;
         this.selectSong = result.data.id;
-        //this.favoritesService.setSelectTrack(this.selectSong);
         this.updateLikedStatus();
       }
     });
     modal.present();
+  }
+
+  async showSongsFavorite() {
+    const songs = this.favoritesUser
+    const modal = await this.modalCtrl.create({
+      component: SongsModalPage,
+      componentProps: {
+        songs: songs,
+      },
+    });
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.song = result.data;
+        this.selectSong = result.data.id;
+        this.updateLikedStatus();
+      }
+    });
+    modal.present()
   }
 
   play() {
@@ -240,8 +254,10 @@ export class HomePage implements OnInit {
   }
 
   //Animacion del like
-  async toggleLike() {
+  async toggleLike(isOpen: boolean) {
+    this.isToastOpen = isOpen;
     if (this.selectSong === 0) {
+      //this.isToastOpen = false;
       console.log('Seleccione una canción primero');
       return;
     } else {
@@ -250,24 +266,29 @@ export class HomePage implements OnInit {
         this.favoritesService.addFavorite(await this.userID, this.selectSong).then(res => {
           if (res.status === "OK") {
             console.log("La cancion se marcó como favorita");
+          }else{
+            console.log(res.msg)
           }
+          this.loadFavorite(); 
         })
       } else {
         this.liked = !this.liked;
         this.favoritesService.deleteFavorite(this.favoriteIdToDelete).then(res =>{
           if(res.status === 'OK'){
             console.log('la cancion se quitó de los favoritos');
+          }else{
+          console.log(res.msg)
           }
+          this.loadFavorite();  
         });
       }
     }
   }
 
   updateLikedStatus() {
-  if (this.favorites && Array.isArray(this.favorites)) {
-    const match = this.favorites.find(song => song.track_id === this.selectSong);
+  if (this.favoritesFilter && Array.isArray(this.favoritesFilter)) {
+    const match = this.favoritesFilter.find(song=> song.track_id === this.selectSong);
     this.liked = !!match;
-    console.log("El this.liked es: " , this.liked);
     if (match) {
       this.favoriteIdToDelete = match.id;  // Aquí se accede SOLO si existe
       console.log('ID del favorito para eliminar:', this.favoriteIdToDelete);
